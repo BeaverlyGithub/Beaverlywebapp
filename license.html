@@ -239,5 +239,30 @@
    
     <script src="js/license-validator.js"></script>
     <script src="js/license-submission.js"></script>
+
+    <script>
+    document.getElementById('license-submission-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Get form values
+        const name = document.getElementById('submission-name').value.trim();
+        const email = document.getElementById('submission-email').value.trim();
+        const details = document.getElementById('license-details').value.trim();
+
+        // Construct email content
+        const subject = encodeURIComponent(`Chilla AI™ License Submission from ${name}`);
+        const body = encodeURIComponent(
+            `Name: ${name}\nEmail: ${email}\n\nLicense Generator Output:\n${details}`
+        );
+
+        // Gmail compose link (works well on desktop/mobile)
+        const gmailURL = `https://mail.google.com/mail/?view=cm&fs=1&to=beaverlytechnologies@gmail.com&su=${subject}&body=${body}`;
+
+        // Open Gmail compose window in new tab
+        window.open(gmailURL, '_blank');
+    });
+</script>
+
+
 </body>
 </html>
