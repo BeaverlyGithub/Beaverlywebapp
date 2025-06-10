@@ -127,7 +127,9 @@ p {
 
 .btn-secondary-sm:hover {
     transform: translateY(-1px);
+  background: black;
     border-color: #0a0a0a;
+  color: #ffffff;
     box-shadow: 0;
 }
 
