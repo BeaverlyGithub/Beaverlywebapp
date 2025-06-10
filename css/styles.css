@@ -63,7 +63,7 @@ p {
     align-items: center;
     justify-content: center;
     padding: 1rem 2rem;
-    background: linear-gradient(135deg, #2563eb 0%, #050505 100%);
+    background: linear-gradient(135deg, #050505 0%, #050505 100%);
     color: white;
     font-weight: 600;
     border-radius: 12px;
@@ -80,7 +80,7 @@ p {
 .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px 0 rgba(37, 99, 235, 0.35);
-    background: linear-gradient(135deg, #1d4ed8 0%, #6d28d9 100%);
+    background: linear-gradient(135deg, #1d4ed8 0%, #050505 100%);
 }
 
 .btn-secondary {
@@ -322,7 +322,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, #2563eb 0%, #050505 100%);
+    background: linear-gradient(135deg, #050505 0%, #050505 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
