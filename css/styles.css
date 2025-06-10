@@ -306,6 +306,8 @@ input:focus, select:focus, textarea:focus {
     line-height: 1.1;
     margin-bottom: 2rem;
     letter-spacing: -0.02em;
+    position: relative;
+    z-index: 20;
 }
 
 .hero-subtitle {
@@ -324,7 +326,9 @@ input:focus, select:focus, textarea:focus {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradientShift 3s ease-in-out infinite;
+    position: relative;
+    z-index: 10;
+    display: inline-block;
 }
 
 @keyframes heroFadeIn {
@@ -352,8 +356,9 @@ input:focus, select:focus, textarea:focus {
     position: absolute;
     border-radius: 50%;
     filter: blur(100px);
-    opacity: 0.1;
+    opacity: 0.08;
     animation: float 6s ease-in-out infinite;
+    z-index: 1;
 }
 
 .bg-blue-gradient {
@@ -378,10 +383,11 @@ input:focus, select:focus, textarea:focus {
     position: absolute;
     inset: 0;
     background-image: 
-        linear-gradient(rgba(37, 99, 235, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(37, 99, 235, 0.03) 1px, transparent 1px);
+        linear-gradient(rgba(37, 99, 235, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.02) 1px, transparent 1px);
     background-size: 50px 50px;
     animation: gridMove 20s linear infinite;
+    z-index: 2;
 }
 
 @keyframes float {

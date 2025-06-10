@@ -47,7 +47,7 @@
             <!-- License Tools Section -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 mb-8">
                 <h2 class="text-xl font-semibold text-gray-900 mb-6">Need Your Account Details?</h2>
-                <div class="grid md:grid-cols-2 gap-6">
+                <div class="grid md:grid-cols-3 gap-6">
                     <div class="text-center p-6 bg-gray-50 rounded-lg">
                         <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
                             <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,6 +61,18 @@
                         </a>
                     </div>
                     <div class="text-center p-6 bg-gray-50 rounded-lg">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Submit License Details</h3>
+                        <p class="text-gray-600 text-sm mb-4">Send us your generator output for manual validation</p>
+                        <button onclick="openLicenseSubmissionModal()" class="btn-secondary-sm">
+                            Submit Details
+                        </button>
+                    </div>
+                    <div class="text-center p-6 bg-gray-50 rounded-lg">
                         <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
                             <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -71,6 +83,95 @@
                         <a href="assets/installation-guide.pdf" target="_blank" class="btn-secondary-sm">
                             View PDF
                         </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- License Submission Modal -->
+            <div id="license-submission-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+                <div class="bg-white rounded-2xl max-w-2xl w-full max-h-90vh overflow-y-auto">
+                    <div class="p-8">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-2xl font-semibold text-gray-900">Submit License Details</h3>
+                            <button onclick="closeLicenseSubmissionModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                            <div class="flex items-start space-x-3">
+                                <svg class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <div>
+                                    <h4 class="font-semibold text-blue-900 mb-1">Instructions</h4>
+                                    <ul class="text-blue-800 text-sm space-y-1">
+                                        <li>1. Run the License Generator EA on your MT5 platform</li>
+                                        <li>2. Copy all the output details from the generator</li>
+                                        <li>3. Paste the complete details in the text area below</li>
+                                        <li>4. We'll validate your license within 24 hours</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="license-submission-form" class="space-y-6">
+                            <div>
+                                <label for="submission-name" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Your Name *
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="submission-name" 
+                                    name="name"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                                    placeholder="Enter your full name"
+                                    required
+                                >
+                            </div>
+
+                            <div>
+                                <label for="submission-email" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Email Address *
+                                </label>
+                                <input 
+                                    type="email" 
+                                    id="submission-email" 
+                                    name="email"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                                    placeholder="your.email@example.com"
+                                    required
+                                >
+                            </div>
+
+                            <div>
+                                <label for="license-details" class="block text-sm font-medium text-gray-700 mb-2">
+                                    License Generator Output *
+                                </label>
+                                <textarea 
+                                    id="license-details" 
+                                    name="license_details"
+                                    rows="8"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                                    placeholder="Paste the complete output from the License Generator EA here, including:&#10;- MT5 Account ID&#10;- Broker Name&#10;- Account Details&#10;- Generated Token&#10;- Any other details shown by the generator"
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <button type="submit" id="submission-submit-btn" class="btn-primary flex-1">
+                                    Send License Details
+                                </button>
+                                <button type="button" onclick="closeLicenseSubmissionModal()" class="btn-secondary flex-1">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Success/Error Messages -->
+                        <div id="submission-message" class="hidden mt-6"></div>
                     </div>
                 </div>
             </div>
@@ -136,5 +237,6 @@
 
     <script src="js/main.js"></script>
     <script src="js/license-validator.js"></script>
+    <script src="js/license-submission.js"></script>
 </body>
 </html>

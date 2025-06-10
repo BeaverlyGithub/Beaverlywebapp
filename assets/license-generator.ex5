@@ -1,0 +1,16 @@
+This file represents the License Generator Expert Advisor (.ex5) file.
+In production, this would be a binary file that users install on their MT5 platform
+to generate and retrieve their account credentials for license validation.
+
+The license generator EA would:
+- Display the user's MT5 account ID
+- Show broker information
+- Generate authentication tokens
+- Provide account verification details
+- Help users identify their correct account ID for license validation
+
+This tool helps users who may not know their exact MT5 account ID or need
+to verify their account details before license validation.
+
+File size would typically be: 20-100 KB
+File format: MetaQuotes Language 5 compiled executable

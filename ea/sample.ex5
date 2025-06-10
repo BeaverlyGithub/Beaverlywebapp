@@ -1,0 +1,12 @@
+This file represents a compiled Expert Advisor (.ex5) file.
+In production, this would be a binary file containing the compiled trading algorithm.
+For this MVP demonstration, this file serves as a placeholder for the actual EA download.
+
+The actual .ex5 files would be:
+- Compiled MetaTrader 5 Expert Advisor files
+- Specific to each user's account and license
+- Protected with license validation code
+- Optimized for the Chilla AI trading strategy
+
+File size would typically be: 50-500 KB
+File format: MetaQuotes Language 5 compiled executable
