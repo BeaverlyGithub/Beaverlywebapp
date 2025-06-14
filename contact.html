@@ -246,6 +246,35 @@
 
       
     <script src="js/contact-form.js"></script>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggleBtn = document.getElementById("mobile-menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const menuLinks = document.querySelectorAll(".mobile-link");
+    let isOpen = false;
+
+    toggleBtn.addEventListener("click", function () {
+      isOpen = !isOpen;
+      if (isOpen) {
+        mobileMenu.classList.remove("max-h-0");
+        mobileMenu.classList.add("max-h-96");
+      } else {
+        mobileMenu.classList.remove("max-h-96");
+        mobileMenu.classList.add("max-h-0");
+      }
+    });
+
+    menuLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("max-h-96");
+        mobileMenu.classList.add("max-h-0");
+        isOpen = false;
+      });
+    });
+  });
+</script>
+
     
 </body>
 </html>
