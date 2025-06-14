@@ -10,27 +10,43 @@
 </head>
 <body class="bg-gray-50 font-outfit">
     <!-- Navigation -->
-    <nav class="bg-white shadow-sm border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center space-x-2">
-                    <img src="attached_assets/beaverly_logoi.png" alt="Beaverly" class="h-8 w-8">
-                    <span class="text-xl font-semibold text-gray-900">Beaverly®</span>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="text-gray-600 hover:text-gray-900 transition-colors">Dashboard</a>
-                    <a href="license.html" class="text-gray-900 font-medium">License</a>
-                    <a href="faq.html" class="text-gray-600 hover:text-gray-900 transition-colors">FAQ</a>
-                    <a href="contact.html" class="text-gray-600 hover:text-gray-900 transition-colors">Support</a>
-                </div>
-                <button class="md:hidden p-2">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </nav>
+<nav class="bg-white shadow-sm border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center space-x-2">
+        <img src="attached_assets/beaverly_logoi.png" alt="Beaverly" class="h-8 w-8">
+        <a href="https://beaverlygithub.github.io/BeaverlySite/" class="text-xl font-semibold text-gray-900">Beaverly®</a>
+      </div>
+
+      <!-- Desktop Links -->
+      <div class="hidden md:flex space-x-8">
+        <a href="index.html" class="text-gray-900 font-medium">Dashboard</a>
+        <a href="license.html" class="text-gray-600 hover:text-gray-900 transition-colors">License</a>
+        <a href="faq.html" class="text-gray-600 hover:text-gray-900 transition-colors">FAQ</a>
+        <a href="contact.html" class="text-gray-600 hover:text-gray-900 transition-colors">Support</a>
+      </div>
+
+      <!-- Mobile Toggle Button -->
+      <div class="md:hidden">
+        <button id="mobile-menu-toggle" class="p-2 focus:outline-none">
+          <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="md:hidden max-h-0 overflow-hidden transition-all duration-300 ease-in-out px-4 space-y-2">
+    <a href="index.html" class="block text-gray-900 font-medium mobile-link">Dashboard</a>
+    <a href="license.html" class="block text-gray-600 hover:text-gray-900 mobile-link">License</a>
+    <a href="faq.html" class="block text-gray-600 hover:text-gray-900 mobile-link">FAQ</a>
+    <a href="contact.html" class="block text-gray-600 hover:text-gray-900 mobile-link">Support</a>
+  </div>
+</nav>
+
 
     <!-- License Validation Section -->
     <section class="py-20">
@@ -263,6 +279,35 @@
         window.open(gmailURL, '_blank');
     });
 </script>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggleBtn = document.getElementById("mobile-menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const menuLinks = document.querySelectorAll(".mobile-link");
+    let isOpen = false;
+
+    toggleBtn.addEventListener("click", function () {
+      isOpen = !isOpen;
+      if (isOpen) {
+        mobileMenu.classList.remove("max-h-0");
+        mobileMenu.classList.add("max-h-96");
+      } else {
+        mobileMenu.classList.remove("max-h-96");
+        mobileMenu.classList.add("max-h-0");
+      }
+    });
+
+    menuLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("max-h-96");
+        mobileMenu.classList.add("max-h-0");
+        isOpen = false;
+      });
+    });
+  });
+</script>
+
 
 
 </body>
