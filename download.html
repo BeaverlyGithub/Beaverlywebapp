@@ -81,6 +81,17 @@
                     </div>
                 </div>
             </div>
+<div>
+    <label class="block text-sm font-medium text-gray-500 mb-1">License Key</label>
+    <div class="flex items-center space-x-2">
+        <p id="license-key" class="text-lg font-mono font-semibold text-blue-700 break-all">-</p>
+        <button id="copy-license-btn" class="text-sm text-gray-600 hover:text-blue-600" title="Copy to clipboard">
+            📋
+        </button>
+    </div>
+    <p id="copy-status" class="text-xs text-green-600 hidden mt-1">Copied!</p>
+</div>
+
 
             <!-- Downloads Grid -->
             <div class="grid md:grid-cols-2 gap-8">
@@ -191,6 +202,14 @@
                 document.getElementById('account-id').textContent = data.account;
                 document.getElementById('plan-type').textContent = data.plan;
                 document.getElementById('expiry-date').textContent = new Date(data.expiry).toLocaleDateString();
+                document.getElementById('license-key').textContent = data.license_key;
+                document.getElementById('copy-license-btn').addEventListener('click', () => {
+    const key = data.license_key;
+    navigator.clipboard.writeText(key).then(() => {
+        const status = document.getElementById('copy-status');
+        status.classList.remove('hidden');
+        setTimeout(() => status.classList.add('hidden'), 2000);
+
                 
                 const downloadBtn = document.getElementById('download-ea');
                 downloadBtn.disabled = false;
