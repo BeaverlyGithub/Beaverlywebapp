@@ -195,33 +195,41 @@
   
     <script>
         // Load license data from localStorage
-        document.addEventListener('DOMContentLoaded', function() {
-            const licenseData = localStorage.getItem('validatedLicense');
-            if (licenseData) {
-                const data = JSON.parse(licenseData);
-                document.getElementById('account-id').textContent = data.account;
-                document.getElementById('plan-type').textContent = data.plan;
-                document.getElementById('expiry-date').textContent = new Date(data.expiry).toLocaleDateString();
-                document.getElementById('license-key').textContent = data.license_key;
-                document.getElementById('copy-license-btn').addEventListener('click', () => {
-    const key = data.license_key;
-    navigator.clipboard.writeText(key).then(() => {
-        const status = document.getElementById('copy-status');
-        status.classList.remove('hidden');
-        setTimeout(() => status.classList.add('hidden'), 2000);
+        <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const licenseData = localStorage.getItem('validatedLicense');
 
-                
-                const downloadBtn = document.getElementById('download-ea');
-                downloadBtn.disabled = false;
-                downloadBtn.onclick = function() {
-                    window.location.href = "ea/Chilla_Connect.ex5";
-                };
-            }  else {
-                // Redirect to license page if no valid license
-                window.location.href = 'license.html';
-            }
+    if (licenseData) {
+        const data = JSON.parse(licenseData);
+
+        document.getElementById('account-id').textContent = data.account;
+        document.getElementById('plan-type').textContent = data.plan;
+        document.getElementById('expiry-date').textContent = new Date(data.expiry).toLocaleDateString();
+        document.getElementById('license-key').textContent = data.license_key;
+
+        // Enable download button
+        const downloadBtn = document.getElementById('download-ea');
+        downloadBtn.disabled = false;
+        downloadBtn.onclick = function() {
+            window.location.href = data.downloadLink || "ea/ChillaConnect.ex5";
+        };
+
+        // Copy license key button
+        document.getElementById('copy-license-btn').addEventListener('click', () => {
+            navigator.clipboard.writeText(data.license_key).then(() => {
+                const status = document.getElementById('copy-status');
+                status.classList.remove('hidden');
+                setTimeout(() => status.classList.add('hidden'), 2000);
+            });
         });
-    </script>
+
+    } else {
+        // Redirect to license page if no valid license
+        window.location.href = 'license.html';
+    }
+});
+</script>
+
 
 
 <script>
