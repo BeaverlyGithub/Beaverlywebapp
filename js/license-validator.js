@@ -8,7 +8,7 @@ document.getElementById("license-form").addEventListener("submit", function (e) 
     resultDiv.classList.add("hidden");
     loading.classList.remove("hidden");
 
-    fetch(`https://cloud-m2-production.up.railway.app/license/${mt5Account}`)
+    fetch(`https://cloud-m2-production.up.railway.app/api/license_status?mt5_id=${mt5Account}`)
         .then(res => {
             if (!res.ok) throw new Error("License not found");
             return res.json();
