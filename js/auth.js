@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     connectionForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
+
         const mt5Id = document.getElementById('mt5-id').value;
         const mt5Password = document.getElementById('mt5-password').value;
 
@@ -29,24 +29,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             // Step 1: Validate license with MT5 ID
-            const licenseResponse = await fetch('https://cloud-m2-production.up.railway.app/api/license_status', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    mt5_account_id: mt5Id
-                })
-            });
+            const licenseResponse = await fetch(`https://cloud-m2-production.up.railway.app/api/license_status?mt5_id=${mt5Id}`);
 
             if (!licenseResponse.ok) {
                 throw new Error('MT5 account not licensed. Please ensure your account has an active Chilla AI license.');
             }
 
             const licenseData = await licenseResponse.json();
-            
+
             // Step 2: Connect MT5 credentials to backend
-            const connectResponse = await fetch('/connect_mt5', {
+            const connectResponse = await fetch('https://cloud-m2-production.up.railway.app/connect_mt5', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,12 +55,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const connectData = await connectResponse.json();
-            
+
             // Store auth token and user data
-            localStorage.setItem('chilla_auth_token', connectData.auth_token || 'temp_token');
+            localStorage.setItem('chilla_auth_token', connectData.auth_token);
             localStorage.setItem('chilla_license_data', JSON.stringify(licenseData));
             localStorage.setItem('chilla_mt5_id', mt5Id);
-            
+
             // Redirect to dashboard
             window.location.href = 'dashboard.html';
 
