@@ -6,28 +6,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const errorMessage = document.getElementById('error-message');
     const errorText = document.getElementById('error-text');
 
-    // Check cookie-based auth by pinging backend
+    // Auto-redirect if already authenticated
     fetch('https://cloud-m2-production.up.railway.app/api/verify_token', {
         method: 'POST',
-        credentials: 'include', // <-- send cookie automatically
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: null }) // token body not used; backend checks cookie
+        credentials: 'include'
     })
     .then(res => {
         if (res.ok) {
             window.location.href = 'dashboard.html';
         }
     })
-    .catch(() => { /* silently ignore if unauthenticated */ });
+    .catch(() => { /* fail silently */ });
 
     connectionForm.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         const mt5Id = document.getElementById('mt5-id').value.trim();
         const mt5Password = document.getElementById('mt5-password').value.trim();
+        const broker = document.getElementById('mt5-broker').value.trim();
+        const server = document.getElementById('mt5-server').value.trim();
 
-        if (!mt5Id || !mt5Password) {
-            showError('Please fill in all required fields');
+        if (!mt5Id || !mt5Password || !broker || !server) {
+            showError('Please fill in all fields (ID, password, broker, server)');
             return;
         }
 
@@ -35,24 +35,15 @@ document.addEventListener('DOMContentLoaded', function () {
         hideError();
 
         try {
-            const licenseResponse = await fetch(`https://cloud-m2-production.up.railway.app/api/license_status?mt5_id=${mt5Id}`);
-
-            if (!licenseResponse.ok) {
-                throw new Error('MT5 account not licensed.');
-            }
-
-            const licenseData = await licenseResponse.json();
-
             const connectResponse = await fetch(`https://cloud-m2-production.up.railway.app/api/connect_mt5`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include', // <-- required to store secure cookie
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify({
-                    mt5_account_id: mt5Id,
+                    mt5_id: mt5Id,
                     mt5_password: mt5Password,
-                    license_data: licenseData
+                    broker: broker,
+                    server: server
                 })
             });
 
@@ -60,9 +51,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 throw new Error('Failed to connect MT5 account.');
             }
 
-            // ✅ We are NOT storing auth_token anymore — only non-sensitive local info
-            localStorage.setItem('chilla_license_data', JSON.stringify(licenseData));
+            // Store minimal session info
             localStorage.setItem('chilla_mt5_id', mt5Id);
+            localStorage.setItem('chilla_broker', broker);
 
             window.location.href = 'dashboard.html';
 
