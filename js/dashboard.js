@@ -35,10 +35,18 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     setInterval(loadDashboardData, 30000); // Refresh every 30s
 
-    document.getElementById('logout-btn').addEventListener('click', function () {
-        localStorage.clear();
-        window.location.href = 'index.html';
-    });
+    document.getElementById('logout-btn').addEventListener('click', async function() {
+    localStorage.clear();
+    try {
+        await fetch('https://cloud-m2-production.up.railway.app/api/logout', {
+            method: 'POST',
+            credentials: 'include'
+        });
+    } catch (err) {
+        console.warn('Logout failed silently:', err);
+    }
+    window.location.href = 'index.html';
+});
 
     async function loadDashboardData() {
         try {
