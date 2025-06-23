@@ -47,10 +47,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const connectResponse = await fetch(`https://cloud-m2-production.up.railway.app/api/connect_mt5`, {
                 method: 'POST',
+                credentials: 'include', // <-- required to store secure cookie
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                credentials: 'include', // <-- required to store secure cookie
+                
                 body: JSON.stringify({
                     mt5_account_id: mt5Id,
                     mt5_password: mt5Password,
