@@ -105,25 +105,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     }
 
-    async function loadDashboardData() {
-        try {
-            const response = await fetch(`/stats/${mt5Id}`, {
-                headers: {
-                    'Authorization': `Bearer ${authToken}`
-                }
-            });
-
-            if (!response.ok) throw new Error('Failed to load dashboard data');
-
-            const data = await response.json();
-            updateDashboardUI(data);
-
-        } catch (error) {
-            console.error('Error loading dashboard data:', error);
-            updateDashboardUI(getFallbackData());
-        }
-    }
-
     function updateDashboardUI(data) {
         document.getElementById('balance').textContent = formatCurrency(data.balance || 0);
         document.getElementById('equity').textContent = formatCurrency(data.equity || 0);
