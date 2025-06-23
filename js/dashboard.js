@@ -1,20 +1,20 @@
-document.addEventListener('DOMContentLoaded', async function() {
-    const authToken = localStorage.getItem('chilla_auth_token');
-    const mt5Id = localStorage.getItem('chilla_mt5_id');
+document.addEventListener('DOMContentLoaded', async function () {
+    const mt5Id = localStorage.getItem('chilla_mt5_id'); // ✅ safe to store non-sensitive info like this
 
-    if (!authToken || !mt5Id) {
+    if (!mt5Id) {
         window.location.href = 'index.html';
         return;
     }
 
-    // ✅ Verify token with backend
+    // ✅ Verify token using secure cookie
     try {
         const res = await fetch('https://cloud-m2-production.up.railway.app/api/verify_token', {
             method: 'POST',
+            credentials: 'include',  // 🔐 sends secure cookie automatically
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ token: authToken })
+            body: JSON.stringify({ token: null }) // backend reads cookie instead
         });
 
         if (!res.ok) {
@@ -35,10 +35,26 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     setInterval(loadDashboardData, 30000); // Refresh every 30s
 
-    document.getElementById('logout-btn').addEventListener('click', function() {
+    document.getElementById('logout-btn').addEventListener('click', function () {
         localStorage.clear();
         window.location.href = 'index.html';
     });
+
+    async function loadDashboardData() {
+        try {
+            const response = await fetch(`https://cloud-m2-production.up.railway.app/stats/${mt5Id}`, {
+                credentials: 'include' // 🔐 send secure cookie again
+            });
+
+            if (!response.ok) throw new Error('Failed to load dashboard data');
+
+            const data = await response.json();
+            updateDashboardUI(data);
+        } catch (error) {
+            console.error('Error loading dashboard data:', error);
+            updateDashboardUI(getFallbackData());
+        }
+    }
 
     function initializeDashboard() {
         const ctx = document.getElementById('profitChart').getContext('2d');
