@@ -6,10 +6,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const errorMessage = document.getElementById('error-message');
     const errorText = document.getElementById('error-text');
 
-    const authToken = localStorage.getItem('chilla_auth_token');
-    if (authToken) {
-        window.location.href = 'dashboard.html';
-    }
+    // Check cookie-based auth by pinging backend
+    fetch('https://cloud-m2-production.up.railway.app/api/verify_token', {
+        method: 'POST',
+        credentials: 'include', // <-- send cookie automatically
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: null }) // token body not used; backend checks cookie
+    })
+    .then(res => {
+        if (res.ok) {
+            window.location.href = 'dashboard.html';
+        }
+    })
+    .catch(() => { /* silently ignore if unauthenticated */ });
 
     connectionForm.addEventListener('submit', async function (e) {
         e.preventDefault();
@@ -39,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include', // <-- required to store secure cookie
                 body: JSON.stringify({
                     mt5_account_id: mt5Id,
                     mt5_password: mt5Password,
@@ -50,9 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 throw new Error('Failed to connect MT5 account.');
             }
 
-            const connectData = await connectResponse.json();
-
-            localStorage.setItem('chilla_auth_token', connectData.auth_token || 'temp_token');
+            // ✅ We are NOT storing auth_token anymore — only non-sensitive local info
             localStorage.setItem('chilla_license_data', JSON.stringify(licenseData));
             localStorage.setItem('chilla_mt5_id', mt5Id);
 
