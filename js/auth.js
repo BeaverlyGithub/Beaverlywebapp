@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const mt5Id = document.getElementById('mt5-id').value.trim();
         const mt5Password = document.getElementById('mt5-password').value.trim();
 
+        if (!mt5Id || !mt5Password || !broker || !server) {Add commentMore actions
+            showError('Please fill in all fields (ID, password, broker, server)');
         if (!mt5Id || !mt5Password) {
             showError('Please fill in all required fields');
             return;
@@ -52,6 +54,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({
                     mt5_account_id: mt5Id,
                     mt5_password: mt5Password,
+                    broker: broker,
+                    server: server,
                     license_data: licenseData
                 })
             });
@@ -63,6 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // ✅ We are NOT storing auth_token anymore — only non-sensitive local info
             localStorage.setItem('chilla_license_data', JSON.stringify(licenseData));
             localStorage.setItem('chilla_mt5_id', mt5Id);
+            localStorage.setItem('chilla_broker', broker);
+            localStorage.setItem('chilla_server', server);
 
             window.location.href = 'dashboard.html';
 
