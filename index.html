@@ -70,14 +70,25 @@
                                class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                                placeholder="Enter your MT5 account ID">
                     </div>
-                    
+                    <div>
+                        <label for="mt5-broker" class="block text-sm font-medium text-gray-700 mb-2">Broker</label>
+                        <input id="mt5-broker" name="mt5-broker" type="text" required 
+                               class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                               placeholder="Exact e.g DerivSVG, ExnessCY, DerivBVI">
+                    </div>
                     <div>
                         <label for="mt5-password" class="block text-sm font-medium text-gray-700 mb-2">MT5 Password (Read-only)</label>
                         <input id="mt5-password" name="mt5-password" type="password" required 
                                class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                                placeholder="Enter your MT5 read-only password">
                     </div>
-                </div>
+                <div>
+                        <label for="mt5-server" class="block text-sm font-medium text-gray-700 mb-2">Server</label>
+                        <input id="mt5-server" name="mt5-server" type="text" required 
+                               class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                               placeholder="Exact e.g DerivVU-server, ICMarketsEU-MT5-5ExnessCY-LP_Real1">
+                    </div>
+                    </div>
 
                 <div>
                     <button id="connect-btn" type="submit" 
