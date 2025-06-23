@@ -10,12 +10,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     try {
         const res = await fetch('https://cloud-m2-production.up.railway.app/api/verify_token', {
             method: 'POST',
-            credentials: 'include',  // 🔐 sends secure cookie automatically
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ token: null }) // backend reads cookie instead
+            credentials: 'include'  // 🔐 sends cookie automatically
         });
+
 
         if (!res.ok) {
             localStorage.clear();
