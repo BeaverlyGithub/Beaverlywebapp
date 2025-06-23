@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const mt5Id = document.getElementById('mt5-id').value.trim();
         const mt5Password = document.getElementById('mt5-password').value.trim();
+        const broker = document.getElementById('mt5-broker').value.trim();
+        const server = document.getElementById('mt5-server').value.trim();
 
         if (!mt5Id || !mt5Password || !broker || !server) {Add commentMore actions
             showError('Please fill in all fields (ID, password, broker, server)');
