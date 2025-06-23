@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Store minimal session info
             localStorage.setItem('chilla_mt5_id', mt5Id);
             localStorage.setItem('chilla_broker', broker);
+            localStorage.setItem('chilla_server', server);
 
             window.location.href = 'dashboard.html';
 
