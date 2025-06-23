@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const licenseData = await licenseResponse.json();
 
-            const connectResponse = await fetch(`https://cloud-m2-production.up.railway.app/connect_mt5`, {
+            const connectResponse = await fetch(`https://cloud-m2-production.up.railway.app/api/connect_mt5`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
