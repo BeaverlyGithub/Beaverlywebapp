@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const errorText = document.getElementById('error-text');
 
     // Check cookie-based auth by pinging backend
-    fetch('https://cloud-m2-production.up.railway.app/api/verify_token', {
+    fetch('https://cook.beaverlyai.com/api/verify_token', {
         method: 'POST',
         credentials: 'include', // <-- send cookie automatically
         headers: { 'Content-Type': 'application/json' },
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         hideError();
 
         try {
-            const licenseResponse = await fetch(`https://cloud-m2-production.up.railway.app/api/license_status?mt5_id=${mt5Id}`);
+            const licenseResponse = await fetch(`https://cook.beaverlyai.com/api/license_status?mt5_id=${mt5Id}`);
 
             if (!licenseResponse.ok) {
                 throw new Error('MT5 account not licensed.');
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const licenseData = await licenseResponse.json();
 
-            const connectResponse = await fetch(`https://cloud-m2-production.up.railway.app/api/connect_mt5`, {
+            const connectResponse = await fetch(`https://cook.beaverlyai.com/api/connect_mt5`, {
                 method: 'POST',
                 credentials: 'include', // <-- required to store secure cookie
                 headers: {
