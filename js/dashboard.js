@@ -8,36 +8,39 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // ✅ Verify token using secure cookie
     try {
-        const res = await fetch('https://cook.beaverlyai.com/api/verify_token', {
-            method: 'POST',
-            credentials: 'include'  // 🔐 sends cookie automatically
-        });
+    const res = await fetch('https://cook.beaverlyai.com/api/verify_token', {
+        method: 'POST',
+        credentials: 'include'
+    });
 
-
-        if (!res.ok) {
-            try {
-                const json = await res.json();
-                if (json.detail === "Token expired" || json.detail === "Invalid token" || json.detail === "Token missing") {
-                    localStorage.clear();
-                    window.location.href = 'index.html';
-                    return;
-                }
-            } catch (err) {
-                console.warn('Could not parse token response:', err);
-                // Still fallback to login if something weird happens
+    if (!res.ok) {
+        try {
+            const json = await res.json();
+            if (json.detail === "Token expired" || json.detail === "Invalid token" || json.detail === "Token missing") {
                 localStorage.clear();
                 window.location.href = 'index.html';
                 return;
             }
+        } catch (err) {
+            console.warn('Could not parse token response:', err);
+            localStorage.clear();
+            window.location.href = 'index.html';
+            return;
         }
+    }
+} catch (e) {
+    console.error('Token verification failed:', e);
+    localStorage.clear();
+    window.location.href = 'index.html';
+    return;
+}
 
-    // Initialize dashboard
-    initializeDashboard();
-    loadDashboardData();
+// ✅ Always setup dashboard + logout logic (even if token expired above)
+initializeDashboard();
+loadDashboardData();
+setInterval(loadDashboardData, 30000);
 
-    setInterval(loadDashboardData, 30000); // Refresh every 30s
-
-    document.getElementById('logout-btn').addEventListener('click', async function() {
+document.getElementById('logout-btn').addEventListener('click', async function() {
     localStorage.clear();
     try {
         await fetch('https://cook.beaverlyai.com/api/logout', {
@@ -49,6 +52,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
     window.location.href = 'index.html';
 });
+
 
     async function loadDashboardData() {
         try {
