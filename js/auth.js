@@ -7,22 +7,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const errorText = document.getElementById('error-text');
 
     // Check cookie-based auth by pinging backend
-    fetch('https://cook.beaverlyai.com/api/verify_token', {
-        method: 'POST',
-        credentials: 'include', // <-- send cookie automatically
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: null }) // token body not used; backend checks cookie
-    })
-    .then(res => {
+    (async () => {
+    try {
+        const res = await fetch('https://cook.beaverlyai.com/api/verify_token', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: null })
+        });
+
+        if (!res.ok) return;
+
         const json = await res.json();
-        if (res.ok && json.status === "valid") {
-           setTimeout(() => {
-             window.location.href = 'dashboard.html';
+        if (json.status === "valid") {
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
             }, 500);
         }
+    } catch (err) {
+        console.warn('Silent auth check failed:', err);
+    }
+})();
 
-    })
-    .catch(() => { /* silently ignore if unauthenticated */ });
 
     connectionForm.addEventListener('submit', async function (e) {
         e.preventDefault();
