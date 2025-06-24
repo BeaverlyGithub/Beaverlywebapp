@@ -15,7 +15,10 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .then(res => {
         if (res.ok) {
-            window.location.href = 'dashboard.html';
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 500); // wait 0.5s so cookie is fully saved
+
         }
     })
     .catch(() => { /* silently ignore if unauthenticated */ });
