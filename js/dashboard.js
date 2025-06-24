@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // ✅ Verify token using secure cookie
     try {
-        const res = await fetch('https://cloud-m2-production.up.railway.app/api/verify_token', {
+        const res = await fetch('https://cook.beaverlyai.com/api/verify_token', {
             method: 'POST',
             credentials: 'include'  // 🔐 sends cookie automatically
         });
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.getElementById('logout-btn').addEventListener('click', async function() {
     localStorage.clear();
     try {
-        await fetch('https://cloud-m2-production.up.railway.app/api/logout', {
+        await fetch('https://cook.beaverlyai.com/api/logout', {
             method: 'POST',
             credentials: 'include'
         });
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     async function loadDashboardData() {
         try {
-            const response = await fetch(`https://cloud-m2-production.up.railway.app/stats/${mt5Id}`, {
+            const response = await fetch(`https://cook.beaverlyai.com/stats/${mt5Id}`, {
                 credentials: 'include' // 🔐 send secure cookie again
             });
 
