@@ -14,12 +14,13 @@ document.addEventListener('DOMContentLoaded', function () {
         body: JSON.stringify({ token: null }) // token body not used; backend checks cookie
     })
     .then(res => {
-        if (res.ok) {
-            setTimeout(() => {
-                window.location.href = 'dashboard.html';
-            }, 500); // wait 0.5s so cookie is fully saved
-
+        const json = await res.json();
+        if (res.ok && json.status === "valid") {
+           setTimeout(() => {
+             window.location.href = 'dashboard.html';
+            }, 500);
         }
+
     })
     .catch(() => { /* silently ignore if unauthenticated */ });
 
