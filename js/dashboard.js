@@ -15,16 +15,21 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
         if (!res.ok) {
-            localStorage.clear();
-            window.location.href = 'index.html';
-            return;
+            try {
+                const json = await res.json();
+                if (json.detail === "Token expired" || json.detail === "Invalid token" || json.detail === "Token missing") {
+                    localStorage.clear();
+                    window.location.href = 'index.html';
+                    return;
+                }
+            } catch (err) {
+                console.warn('Could not parse token response:', err);
+                // Still fallback to login if something weird happens
+                localStorage.clear();
+                window.location.href = 'index.html';
+                return;
+            }
         }
-    } catch (e) {
-        console.error('Token verification failed:', e);
-        localStorage.clear();
-        window.location.href = 'index.html';
-        return;
-    }
 
     // Initialize dashboard
     initializeDashboard();
