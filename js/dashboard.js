@@ -112,18 +112,31 @@ document.getElementById('logout-btn').addEventListener('click', async function()
     }
 
     function updateDashboardUI(data) {
-        document.getElementById('balance').textContent = formatCurrency(data.balance || 0);
-        document.getElementById('equity').textContent = formatCurrency(data.equity || 0);
-        document.getElementById('win-rate').textContent = formatPercentage(data.win_rate || 0);
-        document.getElementById('open-trades').textContent = data.open_trades?.length || 0;
-        document.getElementById('engine-status').textContent = data.engine_status || 'Running';
-        document.getElementById('uptime').textContent = data.uptime || '99.99%';
-        document.getElementById('last-signal').textContent = data.last_signal || '2 min ago';
-        document.getElementById('license-plan').textContent = data.license_plan || 'Premium';
-        document.getElementById('license-expiry').textContent = data.license_expiry || '30 days';
+    document.getElementById('balance').textContent = formatCurrency(data.balance || 0);
+    document.getElementById('equity').textContent = formatCurrency(data.equity || 0);
+    document.getElementById('win-rate').textContent = formatPercentage(data.win_rate || 0);
+    document.getElementById('open-trades').textContent = data.open_trades?.length || 0;
+    document.getElementById('engine-status').textContent = data.engine_status || 'Running';
+    document.getElementById('uptime').textContent = data.uptime || '99.99%';
+    document.getElementById('last-signal').textContent = data.last_signal || '2 min ago';
+    document.getElementById('license-plan').textContent = data.license_plan || 'Premium';
+    document.getElementById('license-expiry').textContent = data.license_expiry || '30 days';
 
-        if (data.profit_history?.length > 0) updateProfitChart(data.profit_history);
-        updateTradesTable(data.open_trades || []);
+    if (data.profit_history?.length > 0) updateProfitChart(data.profit_history);
+    updateTradesTable(data.open_trades || []);
+
+    // 🧠 Upgrade Nudge Logic
+    const nudge = document.getElementById('upgrade-nudge');
+    if (data.is_simulated && data.last_trade) {
+        const emoji = data.last_trade.pnl > 0 ? "📈" : "📉";
+        const message = `You just gained ${formatCurrency(data.last_trade.pnl)} today ${emoji} Want this in real life? <a href='upgrade.html' class='underline font-medium'>Upgrade now →</a>`;
+        nudge.innerHTML = message;
+        nudge.classList.remove('hidden');
+    } else {
+        nudge.classList.add('hidden');
+    }
+
+
     }
 
     function updateProfitChart(history) {
