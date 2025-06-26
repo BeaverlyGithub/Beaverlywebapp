@@ -1,10 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const connectionForm = document.getElementById('connection-form');
-    const connectBtn = document.getElementById('connect-btn');
-    const connectText = document.getElementById('connect-text');
-    const connectSpinner = document.getElementById('connect-spinner');
+    const authForm = document.getElementById('auth-form');
+    const authBtn = document.getElementById('auth-btn');
+    const authText = document.getElementById('auth-text');
+    const authSpinner = document.getElementById('auth-spinner');
     const errorMessage = document.getElementById('error-message');
     const errorText = document.getElementById('error-text');
+    const loginTab = document.getElementById('login-tab');
+    const registerTab = document.getElementById('register-tab');
+    const gmailLoginBtn = document.getElementById('gmail-login-btn');
+    
+    let isLoginMode = true;
 
     // Check cookie-based auth by pinging backend
     (async () => {
@@ -30,16 +35,44 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 
 
-    connectionForm.addEventListener('submit', async function (e) {
+    // Tab switching functionality
+    loginTab.addEventListener('click', function() {
+        isLoginMode = true;
+        loginTab.className = 'flex-1 py-2 px-4 text-sm font-medium rounded-md bg-white text-gray-900 shadow-sm';
+        registerTab.className = 'flex-1 py-2 px-4 text-sm font-medium rounded-md text-gray-600 hover:text-gray-900';
+        authText.textContent = 'Sign In';
+    });
+
+    registerTab.addEventListener('click', function() {
+        isLoginMode = false;
+        registerTab.className = 'flex-1 py-2 px-4 text-sm font-medium rounded-md bg-white text-gray-900 shadow-sm';
+        loginTab.className = 'flex-1 py-2 px-4 text-sm font-medium rounded-md text-gray-600 hover:text-gray-900';
+        authText.textContent = 'Sign Up';
+    });
+
+    // Gmail login functionality
+    gmailLoginBtn.addEventListener('click', async function() {
+        setLoadingState(true);
+        hideError();
+        
+        try {
+            // Implement Gmail OAuth flow here
+            showError('Gmail login will be implemented soon. Please use email/password for now.');
+        } catch (error) {
+            showError('Gmail login failed. Please try email/password instead.');
+        } finally {
+            setLoadingState(false);
+        }
+    });
+
+    authForm.addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        const mt5Id = document.getElementById('mt5-id').value.trim();
-        const mt5Password = document.getElementById('mt5-password').value.trim();
-        const broker = document.getElementById('mt5-broker').value.trim();
-        const server = document.getElementById('mt5-server').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
 
-        if (!mt5Id || !mt5Password || !broker || !server) {
-            showError('Please fill in all fields (ID, password, broker, server)');
+        if (!email || !password) {
+            showError('Please fill in all fields');
             return;
         }
 
@@ -47,41 +80,30 @@ document.addEventListener('DOMContentLoaded', function () {
         hideError();
 
         try {
-            const licenseResponse = await fetch(`https://cook.beaverlyai.com/api/license_status?mt5_id=${mt5Id}`);
-
-            if (!licenseResponse.ok) {
-                throw new Error('MT5 account not licensed.');
-            }
-
-            const licenseData = await licenseResponse.json();
-
-            const connectResponse = await fetch(`https://cook.beaverlyai.com/api/connect_mt5`, {
+            const endpoint = isLoginMode ? 'login' : 'register';
+            const response = await fetch(`https://cook.beaverlyai.com/api/${endpoint}`, {
                 method: 'POST',
-                credentials: 'include', // <-- required to store secure cookie
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                
-                body: JSON.stringify({
-                    mt5_account_id: mt5Id,
-                    mt5_password: mt5Password,
-                    broker: broker,
-                    server: server,
-                    license_data: licenseData
-                })
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
             });
 
-            if (!connectResponse.ok) {
-                throw new Error('Failed to connect MT5 account.');
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || `${isLoginMode ? 'Login' : 'Registration'} failed`);
             }
 
-            // ✅ We are NOT storing auth_token anymore — only non-sensitive local info
-            localStorage.setItem('chilla_license_data', JSON.stringify(licenseData));
-            localStorage.setItem('chilla_mt5_id', mt5Id);
-            localStorage.setItem('chilla_broker', broker);
-            localStorage.setItem('chilla_server', server);
-
-            window.location.href = 'dashboard.html';
+            const data = await response.json();
+            
+            if (data.status === 'success') {
+                // Store user email for later use
+                localStorage.setItem('chilla_user_email', email);
+                
+                // Redirect to dashboard
+                window.location.href = 'dashboard.html';
+            } else {
+                throw new Error(data.message || `${isLoginMode ? 'Login' : 'Registration'} failed`);
+            }
 
         } catch (error) {
             console.error(error);
@@ -92,9 +114,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function setLoadingState(loading) {
-        connectBtn.disabled = loading;
-        connectText.textContent = loading ? 'Connecting...' : 'Connect to Chilla AI';
-        connectSpinner.classList.toggle('hidden', !loading);
+        authBtn.disabled = loading;
+        authText.textContent = loading ? (isLoginMode ? 'Signing In...' : 'Signing Up...') : (isLoginMode ? 'Sign In' : 'Sign Up');
+        authSpinner.classList.toggle('hidden', !loading);
     }
 
     function showError(message) {
