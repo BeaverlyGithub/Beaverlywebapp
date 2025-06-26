@@ -1,4 +1,39 @@
+document.addEventListener('DOMContentLoaded', async function () {
+    const mt5Id = localStorage.getItem('chilla_mt5_id'); // ✅ safe to store non-sensitive info like this
 
+    if (!mt5Id) {
+        window.location.href = 'index.html';
+        return;
+    }
+
+    // ✅ Verify token using secure cookie
+    try {
+    const res = await fetch('https://cook.beaverlyai.com/api/verify_token', {
+        method: 'POST',
+        credentials: 'include'
+    });
+
+    if (!res.ok) {
+        try {
+            const json = await res.json();
+            if (json.detail === "Token expired" || json.detail === "Invalid token" || json.detail === "Token missing") {
+                localStorage.clear();
+                window.location.href = 'index.html';
+                return;
+            }
+        } catch (err) {
+            console.warn('Could not parse token response:', err);
+            localStorage.clear();
+            window.location.href = 'index.html';
+            return;
+        }
+    }
+} catch (e) {
+    console.error('Token verification failed:', e);
+    localStorage.clear();
+    window.location.href = 'index.html';
+    return;
+}
 
 // ✅ Always setup dashboard + logout logic (even if token expired above)
 initializeDashboard();
