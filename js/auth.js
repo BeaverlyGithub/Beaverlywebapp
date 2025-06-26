@@ -51,19 +51,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Gmail login functionality
-    gmailLoginBtn.addEventListener('click', async function() {
-        setLoadingState(true);
-        hideError();
-        
-        try {
-            // Implement Gmail OAuth flow here
-            showError('Gmail login will be implemented soon. Please use email/password for now.');
-        } catch (error) {
-            showError('Gmail login failed. Please try email/password instead.');
-        } finally {
-            setLoadingState(false);
-        }
-    });
+    gmailLoginBtn.addEventListener('click', () => {
+    const clientId = "YOUR_CLIENT_ID_HERE";
+    const redirectUri = "https://app.beaverlyai.com/auth/callback";
+    const scope = "https://www.googleapis.com/auth/userinfo.email";
+    const oauthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&access_type=online&prompt=select_account`;
+
+    window.location.href = oauthUrl;
+});
+
 
     authForm.addEventListener('submit', async function (e) {
         e.preventDefault();
