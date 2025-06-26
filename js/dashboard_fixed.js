@@ -221,7 +221,12 @@ document.addEventListener('DOMContentLoaded', async function () {
         const userPlan = userProfile?.plan || 'Free';
         const userEmail = userProfile?.email || localStorage.getItem('chilla_user_email') || '';
         const isGmailUser = userProfile?.auth_provider === 'gmail';
-        const isPaidUser = ['Basic', 'Standard', 'Premium'].includes(userPlan);
+        const isPaidUser = ['basic', 'standard', 'premium'].includes(userPlan);
+        if (!isPaidUser) {
+    document.getElementById('connect-chilla-btn')?.classList.add('hidden');
+    document.getElementById('mt5-status-section')?.classList.add('hidden');
+}
+
 
         // Update profile panel
         document.getElementById('user-email-display').value = userEmail;
@@ -383,7 +388,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     async function handleDisconnectChilla() {
-        if (!confirm('Are you sure you want to disconnect Chilla? This will stop automated trading.')) {
+        if (!confirm('Are you sure you want to disconnect Chilla? This will stop automated execution.')) {
             return;
         }
 
