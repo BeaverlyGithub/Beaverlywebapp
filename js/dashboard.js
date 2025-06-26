@@ -30,8 +30,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 } catch (e) {
     console.error('Token verification failed:', e);
-    localStorage.clear();
-    window.location.href = 'index.html';
+  //  localStorage.clear();
+ //   window.location.href = 'index.html';
     return;
 }
 
