@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Gmail login functionality
     gmailLoginBtn.addEventListener('click', () => {
     const clientId = "514107671303-canjqpiuhlk97eigl1o9cv24i1bjpe54.apps.googleusercontent.com";
-    const redirectUri = "https://app.beaverlyai.com/auth/callback";
+    const redirectUri = "https://cook.beaverlyai.com/auth/callback";
     const scope = "https://www.googleapis.com/auth/userinfo.email";
     const oauthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&access_type=online&prompt=select_account`;
 
