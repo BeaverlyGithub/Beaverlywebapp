@@ -26,7 +26,7 @@ function initializeChangeEmail() {
 async function loadCurrentUserEmail() {
     try {
         const response = await fetch(`${API_BASE_URL}/api/verify_token`, {
-            method: 'GET',
+            method: 'POST',
             credentials: 'include'
         });
         
