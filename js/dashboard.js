@@ -180,20 +180,16 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     function getFallbackData() {
+        const start = Date.now() - 6 * 86400000;
         return {
-            balance: 1000,
-            equity: 1050,
-            win_rate: 65.5,
+            balance: 10000,
+            equity: 10000 + Math.floor(Math.random() * 200 - 100),
+            win_rate: parseFloat((Math.random() * 30 + 50).toFixed(1)),
             open_trades: [],
-            profit_history: [
-                { timestamp: Date.now() - 86400000 * 6, profit: 0 },
-                { timestamp: Date.now() - 86400000 * 5, profit: 150 },
-                { timestamp: Date.now() - 86400000 * 4, profit: 300 },
-                { timestamp: Date.now() - 86400000 * 3, profit: 250 },
-                { timestamp: Date.now() - 86400000 * 2, profit: 400 },
-                { timestamp: Date.now() - 86400000 * 1, profit: 500 },
-                { timestamp: Date.now(), profit: 500 }
-            ]
+            profit_history: Array.from({ length: 7 }, (_, i) => ({
+                timestamp: start + i * 86400000,
+                profit: 50 * (i + 1) + Math.random() * 100
+            }))
         };
     }
 
