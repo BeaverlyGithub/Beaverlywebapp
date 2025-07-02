@@ -3,10 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
     <title>FAQ - Chilla AI™ Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -59,100 +55,127 @@
 </nav>
 
 
-    <!-- FAQ -->
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">Things People Ask Before They Chill</h2>
-      <p style="max-width: 720px; margin: 1rem auto;">We got you. Chilla is not a bank, not an investment, not a bot, not a brokerage. It’s your financial co-pilot. And yes, your money stays with you.</p>
-      <div class="faq-container">
-        <div class="faq-item">
-          <div class="faq-question">
-            <h4>What is Chilla AI?</h4>
-            <div class="faq-toggle">+</div>
-          </div>
-          <div class="faq-answer">
-            <p>Chilla™ is your wealth co-pilot. It's your personal wallstreet analyst, your top hedgefund trader, your financial powerhouse that never sleeps — Just quietly making you money.</p>
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <h4>How do I get access after payment?</h4>
-            <div class="faq-toggle">+</div>
-          </div>
-          <div class="faq-answer">
-            <p>Login, Connect and Chill. Chilla will pamper you from that moment onwards.</p>
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <h4>What if I don't have an MT5 account?</h4>
-            <div class="faq-toggle">+</div>
-          </div>
-          <div class="faq-answer">
-            <p>If you are new to this, register with a regulated broker in your jurisdiction e.g Deriv, Exness. If you are experienced but do not use MT5, we are working more support for other trading platforms</p>
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <h4>Can I withdraw funds anytime?</h4>
-            <div class="faq-toggle">+</div>
-          </div>
-          <div class="faq-answer">
-            <p>Yes, absolutely. Chilla doesn’t hold anything. Your money stays in your broker account and you have full control at all times. You can chill without feeling locked in.</p>
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <h4>Do I need to know trading or do anything?</h4>
-            <div class="faq-toggle">+</div>
-          </div>
-          <div class="faq-answer">
-            <p>Not even a little. You just chill. Chilla was built to handle the complexity so you don’t have to.</p>
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <h4>Is Chilla a bot or investment platform?</h4>
-            <div class="faq-toggle">+</div>
-          </div>
-          <div class="faq-answer">
-            <p>Chilla is your wealth co-pilot that helps you live a chilled life while doing the heavy lifting happily—not an investment platform. We never hold your money. You maintain full control of your capital through your own broker account.</p>
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <h4>Is my money safe?</h4>
-            <div class="faq-toggle">+</div>
-          </div>
-          <div class="faq-answer">
-            <p>Yes. Your funds remain in your regulated broker account. Beaverly never has custody of your money—we only provide your wealth co-pilot.</p>
-          </div>
-        </div>
-        
-        <div class="faq-item">
-          <div class="faq-question">
-            <h4>What returns can I expect?</h4>
-            <div class="faq-toggle">+</div>
-          </div>
-          <div class="faq-answer">
-            <p>Returns depend on market conditions because every market is different. Chilla™ focuses on consistent, intelligent execution and thinks long term.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  
+    <!-- FAQ Section -->
+    <section class="py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-4xl font-light text-gray-900 mb-4">
+                    Frequently Asked Questions
+                </h1>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Everything you need to know about Chilla AI™ and our trading automation platform.
+                </p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item bg-white rounded-xl shadow-sm border border-gray-200">
+                    <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset rounded-xl">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">Do I need a VPS to run Chilla AI™?</h3>
+                            <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer hidden px-6 pb-6">
+                        <p class="text-gray-600 leading-relaxed">
+                            While not strictly required, we highly recommend using a VPS (Virtual Private Server) for optimal performance. A VPS ensures your EA runs 24/7 without interruption, provides consistent internet connectivity, and eliminates the need to keep your personal computer running constantly. Most professional traders use VPS hosting for reliability and performance.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item bg-white rounded-xl shadow-sm border border-gray-200">
+                    <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset rounded-xl">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">Is my capital safe with Chilla AI™?</h3>
+                            <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer hidden px-6 pb-6">
+                        <p class="text-gray-600 leading-relaxed">
+                            Your capital remains entirely under your control in your own brokerage account. Chilla AI™ is an Expert Advisor (EA) that runs on your MT5 platform - we never have access to your funds. The EA includes built-in risk management features, but as with all trading, there are inherent risks. We recommend starting with proper risk management and only trading with capital you can afford to lose.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item bg-white rounded-xl shadow-sm border border-gray-200">
+                    <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset rounded-xl">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">How is Chilla AI™ different from signal services?</h3>
+                            <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer hidden px-6 pb-6">
+                        <p class="text-gray-600 leading-relaxed">
+                            Unlike signal services that require manual copying or constant monitoring, Chilla AI™ is a fully autonomous Expert Advisor. It analyzes market conditions in real-time, makes trading decisions based on advanced algorithms, and executes trades automatically. There's no need to copy signals, wait for notifications, or worry about timing. The EA operates independently 24/7, providing true hands-off trading automation.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item bg-white rounded-xl shadow-sm border border-gray-200">
+                    <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset rounded-xl">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">What happens when my license expires?</h3>
+                            <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer hidden px-6 pb-6">
+                        <p class="text-gray-600 leading-relaxed">
+                            When your license expires, the EA will stop executing new trades but will not interfere with any existing open positions. You'll receive advance notifications before expiration, and you can renew your license at any time to continue automated trading. All your trading history and account data remain unaffected - only the automated trading functionality is paused until renewal.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item bg-white rounded-xl shadow-sm border border-gray-200">
+                    <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset rounded-xl">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">Can I customize the EA settings?</h3>
+                            <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer hidden px-6 pb-6">
+                        <p class="text-gray-600 leading-relaxed">
+                            Yes, Chilla AI™ includes configurable parameters for risk management, lot sizes, and trading preferences. However, the core trading algorithm is optimized and protected. We recommend starting with default settings and making gradual adjustments as you become familiar with the EA's performance. Our user guide provides detailed information about available customization options.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="faq-item bg-white rounded-xl shadow-sm border border-gray-200">
+                    <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset rounded-xl">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-900">What broker requirements are there?</h3>
+                            <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="faq-answer hidden px-6 pb-6">
+                        <p class="text-gray-600 leading-relaxed">
+                            Chilla AI™ works with any MetaTrader 5 (MT5) compatible broker. We recommend brokers with low spreads, fast execution, and reliable connectivity. The broker should allow Expert Advisors and automated trading. Most reputable forex brokers meet these requirements. Ensure your broker offers the currency pairs and instruments you want to trade.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
             <!-- Still Need Help -->
             <div class="mt-12 text-center bg-white rounded-xl shadow-sm border border-gray-200 p-8">
                 <h3 class="text-xl font-semibold text-gray-900 mb-4">Still need help?</h3>
                 <p class="text-gray-600 mb-6">
-                    Can't find what you're looking for? Our support team is here to help you get the most out of Chilla™.
+                    Can't find what you're looking for? Our support team is here to help you get the most out of Chilla AI™.
                 </p>
                 <a href="contact.html" class="btn-primary">
                     Contact Support
