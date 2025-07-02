@@ -299,6 +299,11 @@ input:focus, select:focus, textarea:focus {
     @apply transition-transform duration-200;
 }
 
+.faq-answer {
+  transition-property: max-height;
+}
+
+
 .hero-title {
     font-size: 4rem;
     font-weight: 800;
