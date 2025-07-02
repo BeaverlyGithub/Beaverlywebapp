@@ -78,7 +78,7 @@
                             </svg>
                         </div>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-6">
+                    <div class="faq-answer px-6 pb-6 max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         <p class="text-gray-600 leading-relaxed">
                             Chilla™ is your wealth co-pilot. It's your personal wallstreet analyst, your top hedgefund trader, your financial powerhouse that never sleeps — Just quietly making you money.
                         </p>
@@ -95,7 +95,7 @@
                             </svg>
                         </div>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-6">
+                    <div class="faq-answer px-6 pb-6 max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         <p class="text-gray-600 leading-relaxed">
                             Login, Connect and Chill. Chilla will pamper you from that moment onwards.
                         </p>
@@ -112,7 +112,7 @@
                             </svg>
                         </div>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-6">
+                    <div class="faq-answer px-6 pb-6 max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         <p class="text-gray-600 leading-relaxed">
                             If you are new to this, register with a regulated broker in your jurisdiction e.g Deriv, Exness. If you are experienced but do not use MT5, we are working more support for other trading platforms
                         </p>
@@ -129,7 +129,7 @@
                             </svg>
                         </div>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-6">
+                    <div class="faq-answer px-6 pb-6 max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         <p class="text-gray-600 leading-relaxed">
                             Yes, absolutely. Chilla doesn’t hold anything. Your money stays in your broker account and you have full control at all times. You can chill without feeling locked in.
                         </p>
@@ -146,7 +146,7 @@
                             </svg>
                         </div>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-6">
+                    <div class="faq-answer px-6 pb-6 max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         <p class="text-gray-600 leading-relaxed">
                             Not even a little. You just chill. Chilla was built to handle the complexity so you don’t have to.
                         </p>
@@ -164,7 +164,7 @@
                             </svg>
                         </div>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-6">
+                    <div class="faq-answer px-6 pb-6 max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         <p class="text-gray-600 leading-relaxed">
                             Yes. Your funds remain in your regulated broker account. Beaverly never has custody of your money—we only provide your wealth co-pilot.
                         </p>
@@ -182,7 +182,7 @@
                             </svg>
                         </div>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-6">
+                    <div class="faq-answer px-6 pb-6 max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         <p class="text-gray-600 leading-relaxed">
                             Returns depend on market conditions because every market is different. Chilla™ focuses on consistent, intelligent execution and thinks long term.
                         </p>
@@ -199,7 +199,7 @@
                             </svg>
                         </div>
                     </button>
-                    <div class="faq-answer hidden px-6 pb-6">
+                    <div class="faq-answer px-6 pb-6 max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         <p class="text-gray-600 leading-relaxed">
                             Chilla is your wealth co-pilot that helps you live a chilled life while doing the heavy lifting happily—not an investment platform. We never hold your money. You maintain full control of your capital through your own broker account.
           </div>
@@ -293,12 +293,15 @@
     toggleBtn.addEventListener("click", function () {
       isOpen = !isOpen;
       if (isOpen) {
-        mobileMenu.classList.remove("max-h-0");
-        mobileMenu.classList.add("max-h-96");
-      } else {
-        mobileMenu.classList.remove("max-h-96");
-        mobileMenu.classList.add("max-h-0");
-      }
+            answer.classList.remove('max-h-[500px]');
+            answer.classList.add('max-h-0');
+            icon.classList.remove('rotate-180');
+} else {
+            answer.classList.remove('max-h-0');
+            answer.classList.add('max-h-[500px]');
+            icon.classList.add('rotate-180');
+        }
+
     });
 
     menuLinks.forEach(link => {
