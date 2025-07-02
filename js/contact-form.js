@@ -164,7 +164,8 @@ async function sendEmail(data) {
     // Prepare template parameters
     const templateParams = {
         from_name: data.name,
-        from_email: data.email,
+        from_email: 'hello@beaverlyai.com',
+        reply_to: data.email,
         subject: data.subject,
         message: data.message,
         timestamp: new Date().toISOString(),
