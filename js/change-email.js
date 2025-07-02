@@ -35,11 +35,15 @@ async function loadCurrentUserEmail() {
         }
 
         const data = await response.json();
+        console.log('🔍 Auth check result:', data); // ADD THIS LOG
 
-        if (data.status !== 'valid') {
+        if (!data || data.status !== 'valid') {
+            console.warn('🚫 Invalid auth detected — redirecting');
             localStorage.clear();
             window.location.href = 'index.html';
             return;
+        }
+
         }
 
         const currentEmailField = document.getElementById('current-email');
