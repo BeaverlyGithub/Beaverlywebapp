@@ -29,9 +29,9 @@ function initializeContactForm() {
  */
 function initializeEmailJS() {
     // Get EmailJS configuration from environment variables or use defaults
-    const publicKey = getEnvironmentVariable('EMAILJS_PUBLIC_KEY', 'your-emailjs-public-key');
-    const serviceId = getEnvironmentVariable('EMAILJS_SERVICE_ID', 'your-service-id');
-    const templateId = getEnvironmentVariable('EMAILJS_TEMPLATE_ID', 'your-template-id');
+    const publicKey = '0w-mDmXc8j3hyp1hw';
+    const serviceId = 'service_y3t9c3s';
+    const templateId = 'template_b5c3sacid';
     
     // Initialize EmailJS
     if (window.emailjs) {
@@ -210,15 +210,7 @@ function isValidEmail(email) {
     return emailRegex.test(email);
 }
 
-/**
- * Validate MT5 Account ID format
- * @param {string} accountId - MT5 Account ID to validate
- * @returns {boolean} Whether the account ID is valid
- */
-function isValidMT5AccountId(accountId) {
-    const mt5Regex = /^\d{8,}$/;
-    return mt5Regex.test(accountId);
-}
+
 
 /**
  * Show form message
