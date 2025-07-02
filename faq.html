@@ -248,51 +248,17 @@
 <script src="https://files.bpcontent.cloud/2025/06/09/22/20250609220506-ZFL7FQ6G.js"></script>
 
    
-    <script>
-        // FAQ accordion functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const faqItems = document.querySelectorAll('.faq-item');
-            
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                const answer = item.querySelector('.faq-answer');
-                const icon = item.querySelector('.faq-icon');
-                
-                question.addEventListener('click', function() {
-                    const isOpen = !answer.classList.contains('hidden');
-                    
-                    // Close all other items
-                    faqItems.forEach(otherItem => {
-                        if (otherItem !== item) {
-                            otherItem.querySelector('.faq-answer').classList.add('hidden');
-                            otherItem.querySelector('.faq-icon').classList.remove('rotate-180');
-                        }
-                    });
-                    
-                    // Toggle current item
-                    if (isOpen) {
-                        answer.classList.add('hidden');
-                        icon.classList.remove('rotate-180');
-                    } else {
-                        answer.classList.remove('hidden');
-                        icon.classList.add('rotate-180');
-                    }
-                });
-            });
-        });
-    </script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  const faqItems = document.querySelectorAll('.faq-item');
+ const faqItems = document.querySelectorAll('.faq-item');
 
-  faqItems.forEach(item => {
-    const question = item.querySelector('.faq-question');
-    const answer = item.querySelector('.faq-answer');
-    const icon = item.querySelector('.faq-icon');
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        const icon = item.querySelector('.faq-icon');
 
-    question.addEventListener('click', function () {
-      const isOpen = answer.classList.contains('max-h-[500px]');
+        question.addEventListener('click', function () {
+          const isOpen = answer.classList.contains('max-h-[500px]');
 
       // Close all others
       faqItems.forEach(otherItem => {
