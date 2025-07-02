@@ -33,9 +33,10 @@ async function loadCurrentUserEmail() {
         if (response.ok) {
             const data = await response.json();
             const currentEmailField = document.getElementById('current-email');
-            if (currentEmailField && data.email) {
-                currentEmailField.value = data.email;
+            if (currentEmailField && data.user?.email) {
+                currentEmailField.value = data.user.email;
             }
+
         }
     } catch (error) {
         console.error('Failed to load current email:', error);
