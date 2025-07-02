@@ -202,7 +202,7 @@
                             </svg>
                         </div>
                     </button>
-                    <div class="faq-answer px-6 pb-6 max-h-0">
+                    <div class="faq-answer px-6 pb-6 max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         <p class="text-gray-600 leading-relaxed">
                             Chilla is your wealth co-pilot that helps you live a chilled life while doing the heavy lifting happily—not an 
                             investment platform. We never hold your money. You maintain full control of your capital through your own broker account.</p>
@@ -214,7 +214,7 @@
             <div class="mt-12 text-center bg-white rounded-xl shadow-sm border border-gray-200 p-8">
                 <h3 class="text-xl font-semibold text-gray-900 mb-4">Still need help?</h3>
                 <p class="text-gray-600 mb-6">
-                    Can't find what you're looking for? Our support team is here to help you get the most out of Chilla AI™.
+                    Can't find what you're looking for? Our support team is here to help you get the most out of Chilla.
                 </p>
                 <a href="contact.html" class="btn-primary">
                     Contact Support
@@ -238,7 +238,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-800 mt-8 pt-8 text-center">
-                <p class="text-gray-400">&copy; 2024-2025 Beaverly®. All rights reserved. Chilla AI™ is a trademark of Beaverly®.</p>
+                <p class="text-gray-400">&copy; 2024-2025 Beaverly®. All rights reserved. Chilla is a trademark of Beaverly®.</p>
             </div>
         </div>
     </footer>
@@ -258,13 +258,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const icon = item.querySelector('.faq-icon');
 
         question.addEventListener('click', function () {
-          const isOpen = answer.classList.contains('max-h-[500px]');
+          const isOpen = answer.classList.contains('max-h-96');
 
       // Close all others
       faqItems.forEach(otherItem => {
         const otherAnswer = otherItem.querySelector('.faq-answer');
         const otherIcon = otherItem.querySelector('.faq-icon');
-        otherAnswer.classList.remove('max-h-[500px]');
+        otherAnswer.classList.remove('max-h-96');
         otherAnswer.classList.add('max-h-0');
         otherIcon.classList.remove('rotate-180');
       });
@@ -272,10 +272,10 @@ document.addEventListener('DOMContentLoaded', function () {
       // Toggle current item
       if (!isOpen) {
         answer.classList.remove('max-h-0');
-        answer.classList.add('max-h-[500px]');
+        answer.classList.add('max-h-96');
         icon.classList.add('rotate-180');
       } else {
-        answer.classList.remove('max-h-[500px]');
+        answer.classList.remove('max-h-96');
         answer.classList.add('max-h-0');
         icon.classList.remove('rotate-180');
       }
