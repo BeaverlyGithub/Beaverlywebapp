@@ -45,23 +45,7 @@ function initializeEmailJS() {
     };
 }
 
-/**
- * Get environment variable with fallback
- * @param {string} key - Environment variable key
- * @param {string} fallback - Fallback value
- * @returns {string} Environment variable value or fallback
- */
-function getEnvironmentVariable(key, fallback) {
-    // In a real implementation, these would come from build-time environment variables
-    // For now, using fallbacks that should be replaced in deployment
-    const envVars = {
-        'EMAILJS_PUBLIC_KEY': 'your-emailjs-public-key',
-        'EMAILJS_SERVICE_ID': 'your-service-id',
-        'EMAILJS_TEMPLATE_ID': 'your-template-id'
-    };
-    
-    return envVars[key] || fallback;
-}
+
 
 /**
  * Handle contact form submission
@@ -79,7 +63,6 @@ async function handleFormSubmission(event) {
     const data = {
         name: formData.get('name'),
         email: formData.get('email'),
-        mt5_id: formData.get('mt5_id') || 'Not provided',
         subject: formData.get('subject'),
         message: formData.get('message')
     };
@@ -158,16 +141,7 @@ function validateFormData(data) {
         };
     }
     
-    // Validate MT5 ID if provided
-    if (data.mt5_id && data.mt5_id !== 'Not provided' && !isValidMT5AccountId(data.mt5_id)) {
-        return {
-            isValid: false,
-            message: 'Please enter a valid MT5 Account ID (8+ digits) or leave it empty.'
-        };
-    }
-    
-    return { isValid: true };
-}
+   
 
 /**
  * Send email using EmailJS
@@ -188,7 +162,6 @@ async function sendEmail(data) {
     const templateParams = {
         from_name: data.name,
         from_email: data.email,
-        mt5_account: data.mt5_id,
         subject: data.subject,
         message: data.message,
         timestamp: new Date().toISOString(),
@@ -408,6 +381,5 @@ function trackFormSubmission(formName, status) {
 window.ContactForm = {
     validateFormData,
     isValidEmail,
-    isValidMT5AccountId,
     showFormMessage
 };
