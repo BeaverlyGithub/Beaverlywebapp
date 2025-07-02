@@ -29,21 +29,31 @@ async function loadCurrentUserEmail() {
             method: 'POST',
             credentials: 'include'
         });
-        
-        if (response.ok) {
-            const data = await response.json();
-            const currentEmailField = document.getElementById('current-email');
-            if (currentEmailField && data.user?.email) {
-                currentEmailField.value = data.user.email;
-            }
 
+        if (!response.ok) {
+            throw new Error('Invalid response');
         }
+
+        const data = await response.json();
+
+        if (data.status !== 'valid') {
+            localStorage.clear();
+            window.location.href = 'index.html';
+            return;
+        }
+
+        const currentEmailField = document.getElementById('current-email');
+        if (currentEmailField && data.user?.email) {
+            currentEmailField.value = data.user.email;
+        }
+
     } catch (error) {
-        console.error('Failed to load current email:', error);
-        // Redirect to login if not authenticated
+        console.error('Failed to verify authentication:', error);
+        localStorage.clear();
         window.location.href = 'index.html';
     }
 }
+
 
 /**
  * Handle change email form submission
