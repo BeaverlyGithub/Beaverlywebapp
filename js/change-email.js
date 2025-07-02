@@ -29,35 +29,21 @@ async function loadCurrentUserEmail() {
             method: 'POST',
             credentials: 'include'
         });
-
-        if (!response.ok) {
-            throw new Error('Invalid response');
-        }
-
-        const data = await response.json();
-        console.log('🔍 Auth check result:', data); // ADD THIS LOG
-
-        if (!data || data.status !== 'valid') {
-            console.warn('🚫 Invalid auth detected — redirecting');
-            localStorage.clear();
-            window.location.href = 'index.html';
-            return;
-        }
+        
+        if (response.ok) {
+            const data = await response.json();
+            const currentEmailField = document.getElementById('current-email');
+            if (currentEmailField && data.user?.email) {
+                currentEmailField.value = data.user.email;
+            }
 
         }
-
-        const currentEmailField = document.getElementById('current-email');
-        if (currentEmailField && data.user?.email) {
-            currentEmailField.value = data.user.email;
-        }
-
     } catch (error) {
-        console.error('Failed to verify authentication:', error);
-        localStorage.clear();
+        console.error('Failed to load current email:', error);
+        // Redirect to login if not authenticated
         window.location.href = 'index.html';
     }
 }
-
 
 /**
  * Handle change email form submission
