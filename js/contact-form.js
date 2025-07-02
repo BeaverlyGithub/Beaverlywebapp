@@ -31,7 +31,7 @@ function initializeEmailJS() {
     // Get EmailJS configuration from environment variables or use defaults
     const publicKey = '0w-mDmXc8j3hyp1hw';
     const serviceId = 'service_y3t9c3s';
-    const templateId = 'template_b5c3sacid';
+    const templateId = 'template_b5c3sac';
     
     // Initialize EmailJS
     if (window.emailjs) {
