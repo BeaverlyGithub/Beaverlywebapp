@@ -284,35 +284,40 @@
     </script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const toggleBtn = document.getElementById("mobile-menu-toggle");
-    const mobileMenu = document.getElementById("mobile-menu");
-    const menuLinks = document.querySelectorAll(".mobile-link");
-    let isOpen = false;
+document.addEventListener('DOMContentLoaded', function () {
+  const faqItems = document.querySelectorAll('.faq-item');
 
-    toggleBtn.addEventListener("click", function () {
-      isOpen = !isOpen;
-      if (isOpen) {
-            answer.classList.remove('max-h-[500px]');
-            answer.classList.add('max-h-0');
-            icon.classList.remove('rotate-180');
-} else {
-            answer.classList.remove('max-h-0');
-            answer.classList.add('max-h-[500px]');
-            icon.classList.add('rotate-180');
-        }
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    const icon = item.querySelector('.faq-icon');
 
-    });
+    question.addEventListener('click', function () {
+      const isOpen = answer.classList.contains('max-h-[500px]');
 
-    menuLinks.forEach(link => {
-      link.addEventListener("click", () => {
-        mobileMenu.classList.remove("max-h-96");
-        mobileMenu.classList.add("max-h-0");
-        isOpen = false;
+      // Close all others
+      faqItems.forEach(otherItem => {
+        const otherAnswer = otherItem.querySelector('.faq-answer');
+        const otherIcon = otherItem.querySelector('.faq-icon');
+        otherAnswer.classList.remove('max-h-[500px]');
+        otherAnswer.classList.add('max-h-0');
+        otherIcon.classList.remove('rotate-180');
       });
+
+      if (!isOpen) {
+        answer.classList.remove('max-h-0');
+        answer.classList.add('max-h-[500px]');
+        icon.classList.add('rotate-180');
+      } else {
+        answer.classList.remove('max-h-[500px]');
+        answer.classList.add('max-h-0');
+        icon.classList.remove('rotate-180');
+      }
     });
   });
+});
 </script>
+
 
     
 </body>
