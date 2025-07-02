@@ -140,7 +140,9 @@ function validateFormData(data) {
             message: 'Please enter a detailed message (at least 10 characters).'
         };
     }
-    }
+    
+    return { isValid: true };
+}
     
    
 
