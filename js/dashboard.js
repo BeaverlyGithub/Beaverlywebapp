@@ -219,16 +219,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const isGmailUser = userProfile?.auth_provider === 'gmail';
         const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userPlan);
         if (!isPaidUser) {
-    const chillaBtn = document.getElementById('connect-chilla-btn');
-    const chillaIconBtn = document.getElementById('connect-chilla-btn-icon');
-    const mt5Modal = document.getElementById('mt5-modal');
-
-    [chillaBtn, chillaIconBtn].forEach(btn => {
-      btn?.addEventListener('click', () => {
-        mt5Modal.classList.remove('hidden');
-      });
-    });
-
+    document.getElementById('connect-chilla-btn')?.classList.add('hidden');
     document.getElementById('mt5-status-section')?.classList.add('hidden');
 }
         console.log('User Plan:', userPlan);
