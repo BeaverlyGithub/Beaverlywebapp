@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     function setupUserInterface(userProfile) {
-        const userPlan = userProfile?.plan_status?.toLowerCase() || 'free';
+        const userPlan = userProfile?.plan || 'Free';
         const userEmail = userProfile?.email || localStorage.getItem('chilla_user_email') || '';
         const isGmailUser = userProfile?.auth_provider === 'gmail';
         const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userPlan);
