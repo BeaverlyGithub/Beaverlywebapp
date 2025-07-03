@@ -52,22 +52,19 @@
                         <span id="vps-status-text">Chilla Disconnected</span>
                     </div>
                     
-                    <!-- Connect Chilla Button (for paid users only) -->
-                    <!-- Connect Chilla Button (Text version for desktop) -->
-                    <button id="connect-chilla-btn" class="hidden md:inline-flex items-center px-4 py-2 bg-black 
-                        text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors">Connect Chilla</button>
+                   <!-- Connect Chilla Button (Responsive: Text on Desktop, Icon on Mobile) -->
+                   <button id="connect-chilla-btn" class="hidden items-center justify-center bg-black text-white rounded-lg hover:bg-gray-800 transition-colors
+                        px-2 py-2 md:px-4 md:py-2 md:text-sm md:font-medium">
 
-                    <!-- Connect Chilla Button (Icon version for mobile) -->
-                    <button id="connect-chilla-btn-icon" class="inline-flex md:hidden items-center justify-center 
-                        bg-black text-white p-2 rounded-lg hover:bg-gray-800 transition-colors">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                          </svg>
-                    </button>
+                    <!-- Mobile: Plus Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                  </svg>
 
+                    <!-- Desktop: Text -->
+                    <span class="hidden md:inline">Connect Chilla</span>
+                   </button>
 
-
-                    
                     
                     <!-- Profile Icon -->
                     <button id="profile-btn" class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
