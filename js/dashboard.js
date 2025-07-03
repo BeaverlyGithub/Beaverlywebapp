@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             const userData = await userResponse.json();
             const userProfile = userData.user || {};
-            const isPaidUser = ['basic', 'standard', 'premium'].includes(userProfile.plan_status?.toLowerCase());
+            const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userProfile.plan_status?.toLowerCase());
 
             if (!isPaidUser) {
                 // For free users, show demo data but no profit nudges
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const userPlan = userProfile?.plan || 'Free';
         const userEmail = userProfile?.email || localStorage.getItem('chilla_user_email') || '';
         const isGmailUser = userProfile?.auth_provider === 'gmail';
-        const isPaidUser = ['basic', 'standard', 'premium'].includes(userPlan);
+        const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userPlan);
         if (!isPaidUser) {
     document.getElementById('connect-chilla-btn')?.classList.add('hidden');
     document.getElementById('mt5-status-section')?.classList.add('hidden');
@@ -465,10 +465,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         if (connected) {
             statusDot.className = 'w-2 h-2 bg-green-400 rounded-full';
-            statusText.textContent = 'VPS Connected';
+            statusText.textContent = 'Chilla Connected';
         } else {
             statusDot.className = 'w-2 h-2 bg-gray-400 rounded-full';
-            statusText.textContent = 'VPS Disconnected';
+            statusText.textContent = 'Chilla Disconnected';
         }
     }
 
