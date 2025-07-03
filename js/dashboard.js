@@ -19,6 +19,14 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (data.status === 'valid') {
             isAuthenticated = true;
             userProfile = data.user || {};
+            // Save plan_status and email locally
+        if (userProfile.email) {
+            localStorage.setItem('chilla_user_email', userProfile.email);
+        }
+        if (userProfile.plan_status) {
+            localStorage.setItem('chilla_user_plan', userProfile.plan_status);
+        }
+
         } else {
             localStorage.clear();
             window.location.href = 'index.html';
@@ -32,7 +40,14 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     // Initialize dashboard with user-specific features
-    initializeDashboard(userProfile);
+    const mergedProfile = {
+        email: userProfile.email || localStorage.getItem('chilla_user_email'),
+        plan_status: userProfile.plan_status || localStorage.getItem('chilla_user_plan'),
+        auth_provider: userProfile.auth_provider || ''
+    };
+
+    initializeDashboard(mergedProfile);
+
     loadDashboardData();
     setInterval(loadDashboardData, 30000);
 
