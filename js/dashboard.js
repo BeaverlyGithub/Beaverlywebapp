@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (userProfile.email) {
             localStorage.setItem('chilla_user_email', userProfile.email);
         }
-        if (userProfile.plan_status) {
-            localStorage.setItem('chilla_user_plan', userProfile.plan_status);
+        if (userProfile.plan) {
+            localStorage.setItem('chilla_user_plan', userProfile.plan);
         }
 
         } else {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Initialize dashboard with user-specific features
     const mergedProfile = {
         email: userProfile.email || localStorage.getItem('chilla_user_email'),
-        plan_status: userProfile.plan_status || localStorage.getItem('chilla_user_plan'),
+        plan_status: userProfile.plan || localStorage.getItem('chilla_user_plan'),
         auth_provider: userProfile.auth_provider || ''
     };
 
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     function setupUserInterface(userProfile) {
-        const userPlan = userProfile?.plan_status?.toLowerCase() || 'free';
+        const userPlan = userProfile?.plan?.toLowerCase() || 'free';
         const userEmail = userProfile?.email || localStorage.getItem('chilla_user_email') || '';
         const isGmailUser = userProfile?.auth_provider === 'gmail';
         const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userPlan);
