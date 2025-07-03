@@ -214,70 +214,61 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     function setupUserInterface(userProfile) {
-    const userPlan = (userProfile?.plan || 'Free').toLowerCase();
-    const userEmail = userProfile?.email || localStorage.getItem('chilla_user_email') || '';
-    const isGmailUser = userProfile?.auth_provider === 'gmail';
-    const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userPlan);
+        const userPlan = (userProfile?.plan || 'Free').toLowerCase();
+        const userEmail = userProfile?.email || localStorage.getItem('chilla_user_email') || '';
+        const isGmailUser = userProfile?.auth_provider === 'gmail';
+        const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userPlan);
+        if (!isPaidUser) {
+    document.getElementById('connect-chilla-btn')?.classList.add('hidden');
+    document.getElementById('mt5-status-section')?.classList.add('hidden');
+}
+        console.log('User Plan:', userPlan);
+        console.log('Is Paid User:', isPaidUser);
+ 
 
-    const chillaBtn = document.getElementById('connect-chilla-btn');
-    const chillaIconBtn = document.getElementById('connect-chilla-btn-icon');
-    const mt5Modal = document.getElementById('mt5-modal');
 
-    // Show/hide buttons + MT5 section
-    if (!isPaidUser) {
-        chillaBtn?.classList.add('hidden');
-        chillaIconBtn?.classList.add('hidden');
-        document.getElementById('mt5-status-section')?.classList.add('hidden');
-    } else {
-        chillaBtn?.classList.remove('hidden');
-        chillaIconBtn?.classList.remove('hidden');
-        document.getElementById('mt5-status-section')?.classList.remove('hidden');
+        // Update profile panel
+        document.getElementById('user-email-display').value = userEmail;
+        document.getElementById('current-plan').textContent = userPlan;
+        
+        // Set plan badge color
+        const planBadge = document.getElementById('current-plan');
+        if (isPaidUser) {
+            planBadge.className = 'px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded';
+        }
 
-        // Open modal on button clicks (safe against duplicate listeners)
-        [chillaBtn, chillaIconBtn].forEach(btn => {
-            if (btn && !btn.hasAttribute('data-listener')) {
-                btn.setAttribute('data-listener', 'true');
-                btn.addEventListener('click', () => {
-                    mt5Modal.classList.remove('hidden');
-                });
+        // Show/hide Connect Chilla button based on plan
+        const connectBtn = document.getElementById('connect-chilla-btn');
+        if (isPaidUser) {
+            connectBtn.classList.remove('hidden');
+        }
+
+        // Show/hide upgrade nudge for Free users
+        const upgradeNudge = document.getElementById('upgrade-nudge');
+        if (userPlan === 'Free') {
+            upgradeNudge.classList.remove('hidden');
+        }
+
+        // Show/hide email verification for manual signups
+        const emailVerification = document.getElementById('email-verification');
+        const verificationDot = document.getElementById('verification-status-dot');
+        const verificationText = document.getElementById('verification-status-text');
+        
+        if (!isGmailUser && userEmail) {
+            emailVerification.classList.remove('hidden');
+            if (userProfile?.email_verified) {
+                verificationDot.className = 'w-2 h-2 bg-green-400 rounded-full';
+                verificationText.textContent = 'Email verified';
             }
-        });
+        }
 
-        updateMT5ConnectionStatus();
-    }
-
-    console.log('User Plan:', userPlan);
-    console.log('Is Paid User:', isPaidUser);
-
-    // Profile panel info
-    document.getElementById('user-email-display').value = userEmail;
-    document.getElementById('current-plan').textContent = userPlan;
-
-    const planBadge = document.getElementById('current-plan');
-    if (isPaidUser) {
-        planBadge.className = 'px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded';
-    }
-
-    // Upgrade nudge for free users
-    const upgradeNudge = document.getElementById('upgrade-nudge');
-    if (userPlan === 'free') {
-        upgradeNudge?.classList.remove('hidden');
-    }
-
-    // Email verification check for manual signups
-    const emailVerification = document.getElementById('email-verification');
-    const verificationDot = document.getElementById('verification-status-dot');
-    const verificationText = document.getElementById('verification-status-text');
-
-    if (!isGmailUser && userEmail) {
-        emailVerification?.classList.remove('hidden');
-        if (userProfile?.email_verified) {
-            verificationDot.className = 'w-2 h-2 bg-green-400 rounded-full';
-            verificationText.textContent = 'Email verified';
+        // Show MT5 status section for paid users
+        const mt5StatusSection = document.getElementById('mt5-status-section');
+        if (isPaidUser) {
+            mt5StatusSection.classList.remove('hidden');
+            updateMT5ConnectionStatus();
         }
     }
-}
-
 
     function initializeModals() {
         // MT5 Connection Modal
