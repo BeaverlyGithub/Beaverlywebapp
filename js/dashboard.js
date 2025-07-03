@@ -19,14 +19,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (data.status === 'valid') {
             isAuthenticated = true;
             userProfile = data.user || {};
-            // Save plan_status and email locally
-        if (userProfile.email) {
-            localStorage.setItem('chilla_user_email', userProfile.email);
-        }
-        if (userProfile.plan) {
-            localStorage.setItem('chilla_user_plan', userProfile.plan);
-        }
-
         } else {
             localStorage.clear();
             window.location.href = 'index.html';
@@ -40,14 +32,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     // Initialize dashboard with user-specific features
-    const mergedProfile = {
-        email: userProfile.email || localStorage.getItem('chilla_user_email'),
-        plan_status: userProfile.plan || localStorage.getItem('chilla_user_plan'),
-        auth_provider: userProfile.auth_provider || ''
-    };
-
-    initializeDashboard(mergedProfile);
-
+    initializeDashboard(userProfile);
     loadDashboardData();
     setInterval(loadDashboardData, 30000);
 
@@ -229,7 +214,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     function setupUserInterface(userProfile) {
-        const userPlan = userProfile?.plan || 'free';
+        const userPlan = userProfile?.plan_status?.toLowerCase() || 'free';
         const userEmail = userProfile?.email || localStorage.getItem('chilla_user_email') || '';
         const isGmailUser = userProfile?.auth_provider === 'gmail';
         const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userPlan);
