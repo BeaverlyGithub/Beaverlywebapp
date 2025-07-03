@@ -51,47 +51,19 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     async function loadDashboardData() {
         try {
-            // Get user data first to check if they're paid user
-            const userResponse = await fetch('https://cook.beaverlyai.com/api/verify_token', {
-                method: 'POST',
-                credentials: 'include'
-            });
-
-            if (!userResponse.ok) {
-                console.error('User verification failed');
-                return;
-            }
-
-            const userData = await userResponse.json();
-            const userProfile = userData.user || {};
-            setupUserInterface(userProfile); 
-            const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userProfile.plan_status?.toLowerCase());
-
-            if (!isPaidUser) {
-                // For free users, show demo data but no profit nudges
-                updateDashboardUI(getFallbackData());
-                return;
-            }
-
-            // For paid users, fetch real MT5 data
-            const mt5Id = userProfile.mt5_id || localStorage.getItem('chilla_mt5_id');
+            const mt5Id = localStorage.getItem('chilla_mt5_id');
             if (!mt5Id) {
                 updateDashboardUI(getFallbackData());
                 return;
             }
 
-            // Fetch real MT5 trading data
-            const response = await fetch(`https://cook.beaverlyai.com/api/stats/${mt5Id}`, {
+            const response = await fetch(`https://cook.beaverlyai.com/stats/${mt5Id}`, {
                 credentials: 'include'
             });
 
             if (!response.ok) throw new Error('Failed to load dashboard data');
 
             const data = await response.json();
-            
-            // Check for new profits and show nudge if applicable
-            checkForNewProfits(data);
-            
             updateDashboardUI(data);
         } catch (error) {
             console.error('Error loading dashboard data:', error);
@@ -242,7 +214,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     function setupUserInterface(userProfile) {
-        const userPlan = userProfile?.plan_status?.toLowerCase() || 'free';
+        const userPlan = userProfile?.plan || 'Free';
         const userEmail = userProfile?.email || localStorage.getItem('chilla_user_email') || '';
         const isGmailUser = userProfile?.auth_provider === 'gmail';
         const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userPlan);
