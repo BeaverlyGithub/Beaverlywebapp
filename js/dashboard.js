@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             const userData = await userResponse.json();
             const userProfile = userData.user || {};
+            setupUserInterface(userProfile); 
             const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userProfile.plan_status?.toLowerCase());
 
             if (!isPaidUser) {
