@@ -241,8 +241,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     function setupUserInterface(userProfile) {
-        const rawPlan = userProfile?.plan_status || userProfile?.plan || 'free';
-        const userPlan = rawPlan.toLowerCase();
+        const userPlan = userProfile?.plan || 'free';
         const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userPlan);
         
         const userEmail = userProfile?.email || localStorage.getItem('chilla_user_email') || '';
