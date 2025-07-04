@@ -362,7 +362,7 @@ verifyEmailBtn?.addEventListener('click', async () => {
 
     try {
         // 🌐 Connect MT5 directly (no license check needed)
-        const connectResponse = await fetch('https://cook.beaverlyai.com/connect_mt5', {
+        const connectResponse = await fetch('https://cook.beaverlyai.com/api/connect_mt5', {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
