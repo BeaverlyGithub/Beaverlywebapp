@@ -314,11 +314,34 @@ document.addEventListener('DOMContentLoaded', async function () {
         const disconnectBtn = document.getElementById('disconnect-chilla-btn');
         disconnectBtn?.addEventListener('click', handleDisconnectChilla);
 
-        // Email verification
-        const verifyEmailBtn = document.getElementById('verify-email-btn');
-        verifyEmailBtn?.addEventListener('click', () => {
-            alert('Email verification will be implemented soon.');
+      const verifyEmailBtn = document.getElementById('verify-email-btn');
+
+verifyEmailBtn?.addEventListener('click', async () => {
+    const email = localStorage.getItem('chilla_user_email'); // you already store this when they log in
+    if (!email) {
+        alert("No email found. Please log in again.");
+        return;
+    }
+
+    try {
+        const response = await fetch('https://cook.beaverlyai.com/api/send_verification_email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
         });
+
+        const result = await response.json();
+        if (response.ok) {
+            alert("Verification email sent! Check your inbox.");
+        } else {
+            alert(result.error || "Failed to send verification email.");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("An error occurred. Please try again.");
+    }
+});
+
     }
 
    async function handleMT5Connection(e) {
