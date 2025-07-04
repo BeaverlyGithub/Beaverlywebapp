@@ -321,102 +321,103 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     }
 
-    async function handleMT5Connection(e) {
-        e.preventDefault();
-        
-        const mt5Id = document.getElementById('mt5-id').value.trim();
-        const mt5Password = document.getElementById('mt5-password').value.trim();
-        const broker = document.getElementById('mt5-broker').value.trim();
-        const server = document.getElementById('mt5-server').value.trim();
+   async function handleMT5Connection(e) {
+    e.preventDefault();
+    
+    const mt5Id = document.getElementById('mt5-id').value.trim();
+    const mt5Password = document.getElementById('mt5-password').value.trim();
+    const broker = document.getElementById('mt5-broker').value.trim();
+    const server = document.getElementById('mt5-server').value.trim();
 
-        if (!mt5Id || !mt5Password || !broker || !server) {
-            showMT5Error('Please fill in all fields');
-            return;
-        }
-
-        setMT5LoadingState(true);
-        hideMT5Error();
-
-        try {
-            // Check license status
-            const licenseResponse = await fetch(`https://cook.beaverlyai.com/api/license_status?mt5_id=${mt5Id}`);
-            if (!licenseResponse.ok) {
-                throw new Error('MT5 account not licensed.');
-            }
-
-            const licenseData = await licenseResponse.json();
-
-            // Connect MT5
-            const connectResponse = await fetch('https://cook.beaverlyai.com/api/connect_mt5', {
-                method: 'POST',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    mt5_account_id: mt5Id,
-                    mt5_password: mt5Password,
-                    broker: broker,
-                    server: server,
-                    license_data: licenseData
-                })
-            });
-
-            if (!connectResponse.ok) {
-                throw new Error('Failed to connect MT5 account.');
-            }
-
-            // Store MT5 info locally
-            localStorage.setItem('chilla_license_data', JSON.stringify(licenseData));
-            localStorage.setItem('chilla_mt5_id', mt5Id);
-            localStorage.setItem('chilla_broker', broker);
-            localStorage.setItem('chilla_server', server);
-
-            // Update UI
-            updateMT5ConnectionStatus();
-            updateVPSStatus(true);
-            document.getElementById('mt5-modal').classList.add('hidden');
-            
-            // Refresh dashboard data
-            loadDashboardData();
-
-        } catch (error) {
-            console.error(error);
-            showMT5Error(error.message || 'Connection failed.');
-        } finally {
-            setMT5LoadingState(false);
-        }
+    if (!mt5Id || !mt5Password || !broker || !server) {
+        showMT5Error('Please fill in all fields');
+        return;
     }
+
+    setMT5LoadingState(true);
+    hideMT5Error();
+
+    try {
+        // 🌐 Connect MT5 directly (no license check needed)
+        const connectResponse = await fetch('https://cook.beaverlyai.com/api/connect_mt5', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                mt5_account_id: mt5Id,
+                mt5_password: mt5Password,
+                broker: broker,
+                server: server,
+            })
+        });
+
+        const connectResult = await connectResponse.json();
+
+        if (!connectResponse.ok) {
+            // Show backend error if any (e.g., free user, failed connection, etc.)
+            throw new Error(connectResult.error || 'Failed to connect broker account.');
+        }
+
+        // 📝 Store MT5 info locally
+        localStorage.setItem('chilla_mt5_id', mt5Id);
+        localStorage.setItem('chilla_broker', broker);
+        localStorage.setItem('chilla_server', server);
+
+        // ✅ Update UI
+        updateMT5ConnectionStatus();
+        updateVPSStatus(true);
+        document.getElementById('mt5-modal').classList.add('hidden');
+
+        // 🔄 Refresh dashboard
+        loadDashboardData();
+
+    } catch (error) {
+        console.error(error);
+        showMT5Error(error.message || 'Connection failed.');
+    } finally {
+        setMT5LoadingState(false);
+    }
+}
+
 
     async function handleDisconnectChilla() {
-        if (!confirm('Are you sure you want to disconnect Chilla? This will stop automated execution.')) {
-            return;
-        }
+    const confirmDisconnect = confirm('Are you sure you want to disconnect Chilla? This will stop automated execution.');
 
-        try {
-            const response = await fetch('https://cook.beaverlyai.com/api/disconnect_mt5', {
-                method: 'POST',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' }
-            });
-
-            if (response.ok) {
-                // Clear local MT5 data
-                localStorage.removeItem('chilla_mt5_id');
-                localStorage.removeItem('chilla_broker');
-                localStorage.removeItem('chilla_server');
-                localStorage.removeItem('chilla_license_data');
-
-                // Update UI
-                updateMT5ConnectionStatus();
-                updateVPSStatus(false);
-                document.getElementById('profile-panel').classList.add('hidden');
-            } else {
-                throw new Error('Failed to disconnect');
-            }
-        } catch (error) {
-            console.error('Disconnect error:', error);
-            alert('Failed to disconnect. Please try again.');
-        }
+    if (!confirmDisconnect) {
+        return;
     }
+
+    try {
+        const response = await fetch('https://cook.beaverlyai.com/api/disconnect_mt5', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.detail || result.error || 'Failed to disconnect.');
+        }
+
+        // 🔄 Clear local MT5 storage
+        localStorage.removeItem('chilla_mt5_id');
+        localStorage.removeItem('chilla_broker');
+        localStorage.removeItem('chilla_server');
+
+        // ✅ Update dashboard UI
+        updateMT5ConnectionStatus();
+        updateVPSStatus(false);
+        document.getElementById('profile-panel')?.classList.add('hidden');
+
+        alert('Chilla disconnected successfully.');
+
+    } catch (error) {
+        console.error('Disconnect error:', error);
+        alert(error.message || 'Failed to disconnect. Please try again.');
+    }
+}
+
 
     function updateMT5ConnectionStatus() {
         const mt5Id = localStorage.getItem('chilla_mt5_id');
