@@ -56,6 +56,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                 updateDashboardUI(getFallbackData());
                 return;
             }
+            console.log('Stored MT5 ID:', localStorage.getItem('chilla_mt5_id'));
+            
 
             const response = await fetch(`https://cook.beaverlyai.com/stats/${mt5Id}`, {
                 credentials: 'include'
@@ -65,6 +67,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             const data = await response.json();
             updateDashboardUI(data);
+            checkForNewProfits(data);
         } catch (error) {
             console.error('Error loading dashboard data:', error);
             updateDashboardUI(getFallbackData());
@@ -245,7 +248,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         // Show/hide upgrade nudge for Free users
         const upgradeNudge = document.getElementById('upgrade-nudge');
-        if (userPlan === 'Free') {
+        if (userPlan === 'free') {
             upgradeNudge.classList.remove('hidden');
         }
 
@@ -373,6 +376,7 @@ verifyEmailBtn?.addEventListener('click', async () => {
                 server: server,
             })
         });
+        console.log('Stored MT5 ID:', localStorage.getItem('chilla_mt5_id'));
 
         const connectResult = await connectResponse.json();
 
