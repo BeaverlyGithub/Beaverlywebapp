@@ -1,8 +1,8 @@
-# replit.md
+# beaverly.md
 
 ## Overview
 
-This is a web-based dashboard application for **Chilla AI™**, an AI-powered trading automation platform developed by **Beaverly®**. The application provides user authentication, real-time dashboard monitoring, FAQ support, and contact functionality. It's built as a client-side application with external API integration for authentication and data services.
+This is a web-based dashboard application for **Chilla™**, an AI-powered trading automation platform developed by **Beaverly®**. The application provides user authentication, real-time dashboard monitoring, FAQ support, and contact functionality. It's built as a client-side application with external API integration for authentication and data services.
 
 ## System Architecture
 
