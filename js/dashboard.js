@@ -51,15 +51,15 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     async function loadDashboardData() {
         try {
-            const mt5Id = localStorage.getItem('chilla_mt5_id');
-            if (!mt5Id) {
+            const api_key = localStorage.getItem('chilla_api_key');
+            if (!api_key) {
                 updateDashboardUI(getFallbackData());
                 return;
             }
-            console.log('Stored MT5 ID:', localStorage.getItem('chilla_mt5_id'));
+            console.log('Stored API Key:', localStorage.getItem('chilla_api_key'));
             
 
-            const response = await fetch(`https://cook.beaverlyai.com/stats/${mt5Id}`, {
+            const response = await fetch(`https://cook.beaverlyai.com/stats/${api_key}`, {
                 credentials: 'include'
             });
 
@@ -217,13 +217,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     function setupUserInterface(userProfile) {
-        const userPlan = (userProfile?.plan || 'Free').toLowerCase();
+        const userPlan = (userProfile?.plan || "Chilla's Gift").toLowerCase();
         const userEmail = userProfile?.email || localStorage.getItem('chilla_user_email') || '';
         const isGmailUser = userProfile?.auth_provider === 'gmail';
         const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userPlan);
         if (!isPaidUser) {
-    document.getElementById('connect-chilla-btn')?.classList.add('hidden');
-    document.getElementById('mt5-status-section')?.classList.add('hidden');
+    document.getElementById('connect-chilla-btn')?.classList;
+    document.getElementById('api-status-section')?.classList;
 }
         console.log('User Plan:', userPlan);
         console.log('Is Paid User:', isPaidUser);
@@ -240,17 +240,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             planBadge.className = 'px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded';
         }
 
-        // Show/hide Connect Chilla button based on plan
-        const connectBtn = document.getElementById('connect-chilla-btn');
-        if (isPaidUser) {
-            connectBtn.classList.remove('hidden');
-        }
-
-        // Show/hide upgrade nudge for Free users
-        const upgradeNudge = document.getElementById('upgrade-nudge');
-        if (userPlan === 'free') {
-            upgradeNudge.classList.remove('hidden');
-        }
 
         // Show/hide email verification for manual signups
         const emailVerification = document.getElementById('email-verification');
@@ -265,29 +254,22 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
         }
 
-        // Show MT5 status section for paid users
-        const mt5StatusSection = document.getElementById('mt5-status-section');
-        if (isPaidUser) {
-            mt5StatusSection.classList.remove('hidden');
-            updateMT5ConnectionStatus();
-        }
-    }
 
     function initializeModals() {
-        // MT5 Connection Modal
-        const mt5Modal = document.getElementById('mt5-modal');
+        // API Connection Modal
+        const apiModal = document.getElementById('api-modal');
         const connectChillaBtn = document.getElementById('connect-chilla-btn');
-        const closeMT5Modal = document.getElementById('close-mt5-modal');
-        const cancelMT5Btn = document.getElementById('cancel-mt5-btn');
-        const mt5Form = document.getElementById('mt5-connection-form');
+        const closeapiModal = document.getElementById('close-api-modal');
+        const cancelapiBtn = document.getElementById('cancel-api-btn');
+        const apiForm = document.getElementById('api-connection-form');
 
         connectChillaBtn?.addEventListener('click', () => {
-            mt5Modal.classList.remove('hidden');
+            apiModal.classList.remove('hidden');
         });
 
-        [closeMT5Modal, cancelMT5Btn].forEach(btn => {
+        [closeapiModal, cancelapiBtn].forEach(btn => {
             btn?.addEventListener('click', () => {
-                mt5Modal.classList.add('hidden');
+                apiModal.classList.add('hidden');
             });
         });
 
@@ -304,14 +286,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             profilePanel.classList.add('hidden');
         });
 
-        // Close nudge
-        const closeNudge = document.getElementById('close-nudge');
-        closeNudge?.addEventListener('click', () => {
-            document.getElementById('upgrade-nudge').classList.add('hidden');
-        });
 
-        // MT5 Form Submission
-        mt5Form?.addEventListener('submit', handleMT5Connection);
+        // api Form Submission
+        apiForm?.addEventListener('submit', handleapiConnection);
 
         // Disconnect Chilla
         const disconnectBtn = document.getElementById('disconnect-chilla-btn');
@@ -347,36 +324,34 @@ verifyEmailBtn?.addEventListener('click', async () => {
 
     }
 
-   async function handleMT5Connection(e) {
+   async function handleapiConnection(e) {
     e.preventDefault();
     
-    const mt5Id = document.getElementById('mt5-id').value.trim();
-    const mt5Password = document.getElementById('mt5-password').value.trim();
-    const broker = document.getElementById('mt5-broker').value.trim();
-    const server = document.getElementById('mt5-server').value.trim();
+    const api_key = document.getElementById('api_key').value.trim();
+    const broker = document.getElementById('api-broker').value.trim.toLowerCase();
+    const wallet_id = document.getElementById('wallet_id').value.trim();
 
-    if (!mt5Id || !mt5Password || !broker || !server) {
-        showMT5Error('Please fill in all fields');
+    if (!api_key || !broker) {
+        showapiError('Please fill in all fields');
         return;
     }
 
-    setMT5LoadingState(true);
-    hideMT5Error();
+    setapiLoadingState(true);
+    hideapiError();
 
     try {
-        // 🌐 Connect MT5 directly (no license check needed)
-        const connectResponse = await fetch('https://cook.beaverlyai.com/api/connect_mt5', {
+        // 🌐 Connect api directly
+        const connectResponse = await fetch('https://cook.beaverlyai.com/api/connect_api', {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                mt5_account_id: mt5Id,
-                mt5_password: mt5Password,
+                api_key: api_key,
                 broker: broker,
-                server: server,
+                wallet_id: wallet_id,
             })
         });
-        console.log('Stored MT5 ID:', localStorage.getItem('chilla_mt5_id'));
+        console.log('Stored API key:', localStorage.getItem('chilla_api_key'));
 
         const connectResult = await connectResponse.json();
 
@@ -385,24 +360,23 @@ verifyEmailBtn?.addEventListener('click', async () => {
             throw new Error(connectResult.error || 'Failed to connect broker account.');
         }
 
-        // 📝 Store MT5 info locally
-        localStorage.setItem('chilla_mt5_id', mt5Id);
+        // 📝 Store broker info locally
         localStorage.setItem('chilla_broker', broker);
-        localStorage.setItem('chilla_server', server);
+        localStorage.setItem('chilla_server', wallet_id);
 
         // ✅ Update UI
-        updateMT5ConnectionStatus();
-        updateVPSStatus(true);
-        document.getElementById('mt5-modal').classList.add('hidden');
+        updateapiConnectionStatus();
+        updateapiStatus(true);
+        document.getElementById('api-modal').classList.add('hidden');
 
         // 🔄 Refresh dashboard
         loadDashboardData();
 
     } catch (error) {
         console.error(error);
-        showMT5Error(error.message || 'Connection failed.');
+        showapiError(error.message || 'Connection failed.');
     } finally {
-        setMT5LoadingState(false);
+        setapiLoadingState(false);
     }
 }
 
@@ -415,7 +389,7 @@ verifyEmailBtn?.addEventListener('click', async () => {
     }
 
     try {
-        const response = await fetch('https://cook.beaverlyai.com/api/disconnect_mt5', {
+        const response = await fetch('https://cook.beaverlyai.com/api/disconnect_api', {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' }
@@ -427,14 +401,13 @@ verifyEmailBtn?.addEventListener('click', async () => {
             throw new Error(result.detail || result.error || 'Failed to disconnect.');
         }
 
-        // 🔄 Clear local MT5 storage
-        localStorage.removeItem('chilla_mt5_id');
+        // 🔄 Clear local api storage
         localStorage.removeItem('chilla_broker');
-        localStorage.removeItem('chilla_server');
+        localStorage.removeItem('chilla_wallet_id');
 
         // ✅ Update dashboard UI
-        updateMT5ConnectionStatus();
-        updateVPSStatus(false);
+        updateapiConnectionStatus();
+        updateapiStatus(false);
         document.getElementById('profile-panel')?.classList.add('hidden');
 
         alert('Chilla disconnected successfully.');
@@ -446,14 +419,14 @@ verifyEmailBtn?.addEventListener('click', async () => {
 }
 
 
-    function updateMT5ConnectionStatus() {
-        const mt5Id = localStorage.getItem('chilla_mt5_id');
+    function updateapiConnectionStatus() {
+        const api_key = localStorage.getItem('chilla_api_key');
         const broker = localStorage.getItem('chilla_broker');
-        const connectedInfo = document.getElementById('mt5-connected-info');
-        const notConnected = document.getElementById('mt5-not-connected');
+        const connectedInfo = document.getElementById('api-connected-info');
+        const notConnected = document.getElementById('api-not-connected');
 
-        if (mt5Id && broker) {
-            document.getElementById('connected-mt5-id').textContent = mt5Id;
+        if (api_key && broker) {
+            document.getElementById('connected-api-key').textContent = api_key;
             document.getElementById('connected-broker').textContent = broker;
             connectedInfo.classList.remove('hidden');
             notConnected.classList.add('hidden');
@@ -463,9 +436,9 @@ verifyEmailBtn?.addEventListener('click', async () => {
         }
     }
 
-    function updateVPSStatus(connected) {
-        const statusDot = document.getElementById('vps-status-dot');
-        const statusText = document.getElementById('vps-status-text');
+    function updateapiStatus(connected) {
+        const statusDot = document.getElementById('api-status-dot');
+        const statusText = document.getElementById('api-status-text');
 
         if (connected) {
             statusDot.className = 'w-2 h-2 bg-green-400 rounded-full';
@@ -476,19 +449,19 @@ verifyEmailBtn?.addEventListener('click', async () => {
         }
     }
 
-    function setMT5LoadingState(loading) {
-        const btn = document.getElementById('connect-mt5-btn');
-        const text = document.getElementById('connect-mt5-text');
-        const spinner = document.getElementById('connect-mt5-spinner');
+    function setapiLoadingState(loading) {
+        const btn = document.getElementById('connect-api-btn');
+        const text = document.getElementById('connect-api-text');
+        const spinner = document.getElementById('connect-api-spinner');
 
         btn.disabled = loading;
         text.textContent = loading ? 'Connecting...' : 'Connect';
         spinner.classList.toggle('hidden', !loading);
     }
 
-    function showMT5Error(message) {
-        const errorMessage = document.getElementById('mt5-error-message');
-        const errorText = document.getElementById('mt5-error-text');
+    function showapiError(message) {
+        const errorMessage = document.getElementById('api-error-message');
+        const errorText = document.getElementById('api-error-text');
         
         errorText.textContent = message;
         errorMessage.classList.remove('hidden');
@@ -497,8 +470,8 @@ verifyEmailBtn?.addEventListener('click', async () => {
         }, 5000);
     }
 
-    function hideMT5Error() {
-        document.getElementById('mt5-error-message').classList.add('hidden');
+    function hideapiError() {
+        document.getElementById('api-error-message').classList.add('hidden');
     }
 
     /**
