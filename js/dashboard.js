@@ -60,7 +60,11 @@ document.addEventListener('DOMContentLoaded', async function () {
             
 
             const response = await fetch(`https://cook.beaverlyai.com/stats/${api_key}`, {
-                credentials: 'include'
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
 
             if (!response.ok) throw new Error('Failed to load dashboard data');
