@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const data = await res.json();
         if (data.status === 'valid') {
             isAuthenticated = true;
-            userProfile = data.users || {};
+            userProfile = data.email || {};
         } else {
             localStorage.clear();
             window.location.href = 'index.html';
