@@ -225,10 +225,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const userEmail = userProfile?.email || localStorage.getItem('chilla_user_email') || '';
         const isGmailUser = userProfile?.auth_provider === 'gmail';
         const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userPlan);
-        if (!isPaidUser) {
-    document.getElementById('connect-chilla-btn')?.classList;
-    document.getElementById('api-status-section')?.classList;
-}
+        
         console.log('User Plan:', userPlan);
         console.log('Is Paid User:', isPaidUser);
  
