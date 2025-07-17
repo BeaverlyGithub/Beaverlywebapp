@@ -216,6 +216,24 @@ document.addEventListener('DOMContentLoaded', async function () {
         return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
     }
 
+
+    function updateapiConnectionStatus() {
+    const statusText = document.getElementById('api-connection-status-text');
+    const statusDot = document.getElementById('api-connection-status-dot');
+    const broker = localStorage.getItem('chilla_broker');
+
+    if (!statusText || !statusDot) return;
+
+    if (broker) {
+        statusText.textContent = 'Connected';
+        statusDot.className = 'w-2 h-2 bg-green-400 rounded-full';
+    } else {
+        statusText.textContent = 'Not Connected';
+        statusDot.className = 'w-2 h-2 bg-gray-400 rounded-full';
+    }
+}
+
+
     function setupUserInterface(userProfile) {
         const userPlan = (userProfile?.plan || "Chilla's Gift").toLowerCase();
         const userEmail = userProfile?.email || localStorage.getItem('chilla_user_email') || '';
