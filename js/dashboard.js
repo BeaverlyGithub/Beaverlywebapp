@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             console.log('Stored API Key:', localStorage.getItem('chilla_api_key'));
             
 
-            const response = await fetch(`https://cook.beaverlyai.com/stats/${api_key}`, {
+            const response = await fetch(`https://cook.beaverlyai.com/stats`, {
                 credentials: 'include'
             });
 
