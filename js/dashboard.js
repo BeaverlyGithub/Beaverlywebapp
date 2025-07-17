@@ -329,7 +329,7 @@ verifyEmailBtn?.addEventListener('click', async () => {
     e.preventDefault();
     
     const api_key = document.getElementById('api_key').value.trim();
-    const broker = document.getElementById('api-broker').value.trim().toLowerCase();
+    const broker = document.getElementById('api-broker').value.trim();
     const wallet_id = document.getElementById('wallet_id').value.trim();
 
     if (!api_key || !broker) {
