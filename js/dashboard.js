@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 verificationText.textContent = 'Email verified';
             }
         }
-    }
+    
 
 
     function initializeModals() {
@@ -324,6 +324,7 @@ verifyEmailBtn?.addEventListener('click', async () => {
     }
 });
 
+    }
     }
 
    async function handleapiConnection(e) {
