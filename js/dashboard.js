@@ -259,7 +259,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                 verificationText.textContent = 'Email verified';
             }
         }
-   
+       // Show MT5 status section for paid users
+       const apiStatusSection = document.getElementById('api-status-section');
+       if (isPaidUser) {
+           apiStatusSection.classList.remove('hidden');
+           updateapiConnectionStatus();
+        }
     }
 
     function initializeModals() {
