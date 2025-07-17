@@ -259,13 +259,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 verificationText.textContent = 'Email verified';
             }
         }
-
-        // Show api status section for paid users
-        const apiStatusSection = document.getElementById('api-status-section');
-        if (isPaidUser || !isPaidUser) {
-            apiStatusSection.classList.remove('hidden');
-            updateMT5ConnectionStatus();
-        }
+   
     }
 
     function initializeModals() {
