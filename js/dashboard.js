@@ -254,6 +254,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 verificationText.textContent = 'Email verified';
             }
         }
+    }
 
 
     function initializeModals() {
