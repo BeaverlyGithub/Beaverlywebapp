@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 verificationText.textContent = 'Email verified';
             }
         }
-       // Show MT5 status section for paid users
+       // Show api status section 
        const apiStatusSection = document.getElementById('api-status-section');
        if (isPaidUser) {
            apiStatusSection.classList.remove('hidden');
@@ -395,7 +395,6 @@ verifyEmailBtn?.addEventListener('click', async () => {
     
         // ✅ Update UI
         updateapiConnectionStatus();
-        updateapiStatus(true);
         document.getElementById('api-modal').classList.add('hidden');
 
         // 🔄 Refresh dashboard
@@ -435,7 +434,6 @@ verifyEmailBtn?.addEventListener('click', async () => {
 
         // ✅ Update dashboard UI
         updateapiConnectionStatus();
-        updateapiStatus(false);
         document.getElementById('profile-panel')?.classList.add('hidden');
 
         alert('Chilla disconnected successfully.');
