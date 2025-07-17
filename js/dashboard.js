@@ -60,11 +60,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             
 
             const response = await fetch(`https://cook.beaverlyai.com/stats/${api_key}`, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                credentials: 'include'
             });
 
             if (!response.ok) throw new Error('Failed to load dashboard data');
@@ -225,7 +221,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         const userEmail = userProfile?.email || localStorage.getItem('chilla_user_email') || '';
         const isGmailUser = userProfile?.auth_provider === 'gmail';
         const isPaidUser = ['level one', 'deep chill', 'peak chill'].includes(userPlan);
-        
+        if (!isPaidUser) {
+    document.getElementById('connect-chilla-btn')?.classList.add('hidden');
+    document.getElementById('api-status-section')?.classList.add('hidden');
+}
         console.log('User Plan:', userPlan);
         console.log('Is Paid User:', isPaidUser);
  
@@ -237,8 +236,14 @@ document.addEventListener('DOMContentLoaded', async function () {
         
         // Set plan badge color
         const planBadge = document.getElementById('current-plan');
-        if (isPaidUser) {
+        if (isPaidUser || !isPaidUser) {
             planBadge.className = 'px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded';
+        }
+
+        // Show/hide Connect Chilla button based on plan
+        const connectBtn = document.getElementById('connect-chilla-btn');
+        if (isPaidUser || !isPaidUser) {
+            connectBtn.classList.remove('hidden');
         }
 
 
@@ -254,8 +259,14 @@ document.addEventListener('DOMContentLoaded', async function () {
                 verificationText.textContent = 'Email verified';
             }
         }
-    }
 
+        // Show api status section for paid users
+        const apiStatusSection = document.getElementById('api-status-section');
+        if (isPaidUser || !isPaidUser) {
+            apiStatusSection.classList.remove('hidden');
+            updateMT5ConnectionStatus();
+        }
+    }
 
     function initializeModals() {
         // API Connection Modal
@@ -324,7 +335,6 @@ verifyEmailBtn?.addEventListener('click', async () => {
     }
 });
 
-    
     }
 
    async function handleapiConnection(e) {
@@ -343,7 +353,7 @@ verifyEmailBtn?.addEventListener('click', async () => {
     hideapiError();
 
     try {
-        // 🌐 Connect api directly
+        // 🌐 Connect API directly 
         const connectResponse = await fetch('https://cook.beaverlyai.com/api/connect_api', {
             method: 'POST',
             credentials: 'include',
@@ -363,10 +373,9 @@ verifyEmailBtn?.addEventListener('click', async () => {
             throw new Error(connectResult.error || 'Failed to connect broker account.');
         }
 
-        // 📝 Store broker info locally
+        // 📝 Store api info locally
         localStorage.setItem('chilla_broker', broker);
-        localStorage.setItem('chilla_server', wallet_id);
-
+    
         // ✅ Update UI
         updateapiConnectionStatus();
         updateapiStatus(true);
@@ -406,7 +415,6 @@ verifyEmailBtn?.addEventListener('click', async () => {
 
         // 🔄 Clear local api storage
         localStorage.removeItem('chilla_broker');
-        localStorage.removeItem('chilla_wallet_id');
 
         // ✅ Update dashboard UI
         updateapiConnectionStatus();
@@ -422,35 +430,6 @@ verifyEmailBtn?.addEventListener('click', async () => {
 }
 
 
-    function updateapiConnectionStatus() {
-        const api_key = localStorage.getItem('chilla_api_key');
-        const broker = localStorage.getItem('chilla_broker');
-        const connectedInfo = document.getElementById('api-connected-info');
-        const notConnected = document.getElementById('api-not-connected');
-
-        if (api_key && broker) {
-            document.getElementById('connected-api-key').textContent = api_key;
-            document.getElementById('connected-broker').textContent = broker;
-            connectedInfo.classList.remove('hidden');
-            notConnected.classList.add('hidden');
-        } else {
-            connectedInfo.classList.add('hidden');
-            notConnected.classList.remove('hidden');
-        }
-    }
-
-    function updateapiStatus(connected) {
-        const statusDot = document.getElementById('api-status-dot');
-        const statusText = document.getElementById('api-status-text');
-
-        if (connected) {
-            statusDot.className = 'w-2 h-2 bg-green-400 rounded-full';
-            statusText.textContent = 'Chilla Connected';
-        } else {
-            statusDot.className = 'w-2 h-2 bg-gray-400 rounded-full';
-            statusText.textContent = 'Chilla Disconnected';
-        }
-    }
 
     function setapiLoadingState(loading) {
         const btn = document.getElementById('connect-api-btn');
@@ -477,41 +456,6 @@ verifyEmailBtn?.addEventListener('click', async () => {
         document.getElementById('api-error-message').classList.add('hidden');
     }
 
-    /**
-     * Check for new profits and show personalized nudge
-     */
-    function checkForNewProfits(data) {
-        const currentProfit = data.total_profit || data.balance || 0;
-        const lastProfit = parseFloat(localStorage.getItem('last_profit') || '0');
-        
-        // Only show nudge if profit actually increased
-        if (currentProfit > lastProfit && currentProfit > 0) {
-            const profitIncrease = currentProfit - lastProfit;
-            showProfitNudge(profitIncrease);
-            localStorage.setItem('last_profit', currentProfit.toString());
-        } else {
-            // Update stored profit without showing nudge
-            localStorage.setItem('last_profit', currentProfit.toString());
-        }
-    }
-
-    /**
-     * Show profit nudge with actual profit change
-     */
-    function showProfitNudge(profitIncrease) {
-        const upgradeNudge = document.getElementById('upgrade-nudge');
-        const nudgeText = upgradeNudge.querySelector('p');
-        
-        if (upgradeNudge && nudgeText) {
-            nudgeText.innerHTML = `You just gained ${formatCurrency(profitIncrease)} today 📈`;
-            upgradeNudge.classList.remove('hidden');
-            
-            // Auto-hide after 10 seconds
-            setTimeout(() => {
-                upgradeNudge.classList.add('hidden');
-            }, 10000);
-        }
-    }
 
     /**
      * Initialize change email functionality
